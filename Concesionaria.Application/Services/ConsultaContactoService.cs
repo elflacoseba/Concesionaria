@@ -16,7 +16,6 @@ namespace Concesionaria.Application.Services
             _mapper = mapper;
         }
 
-
         public async Task<IEnumerable<ConsultaContactoDTO>> GetAllConsultasContactoAsync()
         {
             var consultas = await _repository.GetAllAsync();
@@ -24,5 +23,25 @@ namespace Concesionaria.Application.Services
             return _mapper.Map<IEnumerable<ConsultaContactoDTO>>(consultas);
         }
 
+        public async Task<ConsultaContactoDTO> GetConsultaContactoByIdAsync(int id)
+        {
+            var consulta = await _repository.GetByIdAsync(id);
+
+            return _mapper.Map<ConsultaContactoDTO>(consulta);
+        }
+
+        public async Task<ConsultaContactoDTO> CreateConsultaContactoAsync(ConsultaContactoCreacionDTO consultaContactoCreacionDTO)
+        {
+            if (consultaContactoCreacionDTO == null)
+            {
+                throw new ArgumentNullException(nameof(consultaContactoCreacionDTO), "ConsultaContactoCreacionDTO no puede ser nulo.");
+            }
+            var consultaContacto = _mapper.Map<ConsultaContacto>(consultaContactoCreacionDTO);
+            await _repository.AddAsync(consultaContacto);
+            await _repository.SaveChangesAsync();
+
+            return await Task.FromResult(_mapper.Map<ConsultaContactoDTO>(consultaContacto));
+
+        }
     }
 }

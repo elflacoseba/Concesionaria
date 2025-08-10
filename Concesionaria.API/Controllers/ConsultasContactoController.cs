@@ -20,5 +20,30 @@ namespace Concesionaria.API.Controllers
         {
             return await _consultaContactoService.GetAllConsultasContactoAsync();
         }
+
+        [HttpGet("{id}", Name = "ObtenerConsultaContacto")]
+        public async Task<ActionResult<ConsultaContactoDTO>> Get(int id)
+        {
+            var consultaContacto = await _consultaContactoService.GetConsultaContactoByIdAsync(id);
+
+            if (consultaContacto == null)
+            {
+                return NotFound();
+            }
+
+            return consultaContacto;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Post(ConsultaContactoCreacionDTO consultaContactoCreacionDTO)
+        {
+            if (consultaContactoCreacionDTO == null)
+            {
+                return BadRequest("El objeto ConsultaContactoCreacionDTO no puede ser nulo.");
+            }
+
+            var consultaContacto = await _consultaContactoService.CreateConsultaContactoAsync(consultaContactoCreacionDTO);
+            return CreatedAtRoute("ObtenerConsultaContacto", new { id = consultaContacto.Id }, consultaContacto);
+        }
     }
 }

@@ -9,6 +9,8 @@ namespace Concesionaria.Application.Mappers
         public ConsultaContactoMappingProfile()
         {
             CreateMap<ConsultaContacto, ConsultaContactoDTO>();
+
+            CreateMap<ConsultaContactoCreacionDTO, ConsultaContacto>();
         }
     }
 }
