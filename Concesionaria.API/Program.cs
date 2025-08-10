@@ -1,4 +1,7 @@
 
+using Concesionaria.Application.Extensions;
+using Concesionaria.Infrastructure.Extensions;
+
 namespace Concesionaria.API
 {
     public class Program
@@ -6,8 +9,11 @@ namespace Concesionaria.API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            var configuration = builder.Configuration;
 
             // Add services to the container.
+            builder.Services.AddApplicationLayer();
+            builder.Services.AddInfrastructureLayer(configuration);
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
