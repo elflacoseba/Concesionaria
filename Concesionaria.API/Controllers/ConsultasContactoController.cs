@@ -45,5 +45,20 @@ namespace Concesionaria.API.Controllers
             var consultaContacto = await _consultaContactoService.CreateConsultaContactoAsync(consultaContactoCreacionDTO);
             return CreatedAtRoute("ObtenerConsultaContacto", new { id = consultaContacto.Id }, consultaContacto);
         }
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var consultaContacto = await _consultaContactoService.GetConsultaContactoByIdAsync(id);
+
+            if (consultaContacto == null)
+            {
+                return NotFound();
+            }
+
+            var result = await _consultaContactoService.DeleteConsultaContactoAsync(id);
+
+            return NoContent();
+        }
     }
 }

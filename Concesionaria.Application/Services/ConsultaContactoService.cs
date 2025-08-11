@@ -2,6 +2,7 @@
 using Concesionaria.Application.DTOs;
 using Concesionaria.Application.Interfaces;
 using Concesionaria.Domain.Entities;
+using System.Threading.Tasks;
 
 namespace Concesionaria.Application.Services
 {
@@ -42,6 +43,19 @@ namespace Concesionaria.Application.Services
 
             return await Task.FromResult(_mapper.Map<ConsultaContactoDTO>(consultaContacto));
 
+        }
+
+        public async Task<int> DeleteConsultaContactoAsync(int id)
+        {
+            var consulta = await _repository.GetByIdAsync(id);
+            
+            if (consulta == null)
+            {
+                throw new KeyNotFoundException($"ConsultaContacto con ID {id} no encontrado.");                    
+            }
+
+            _repository.Delete(consulta);
+            return await _repository.SaveChangesAsync();
         }
     }
 }
