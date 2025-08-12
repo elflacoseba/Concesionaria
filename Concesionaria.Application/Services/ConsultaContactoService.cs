@@ -39,6 +39,30 @@ namespace Concesionaria.Application.Services
             return consultaContacto.Adapt<ConsultaContactoDTO>();
         }
 
+        public async Task<int> UpdateConsultaContactoAsync(int id, ConsultaContactoActualizacionDTO consultaContactoActualizacionDTO)
+        {
+            if (consultaContactoActualizacionDTO == null)
+            {
+                throw new ArgumentNullException(nameof(consultaContactoActualizacionDTO), "ConsultaContactoActualizacionDTO no puede ser nulo.");
+            }
+
+            var consultaContacto = await _repository.GetByIdAsync(id);
+
+            if (consultaContacto == null)
+            {
+                throw new KeyNotFoundException($"ConsultaContacto con ID {id} no encontrada.");
+            }
+
+            var fechaEnvio = consultaContacto.FechaEnvio; // Guardamos la fecha original
+
+            consultaContacto = consultaContactoActualizacionDTO.Adapt<ConsultaContacto>();
+            consultaContacto.Id = id; // Aseguramos que el ID se mantenga
+            consultaContacto.FechaEnvio = fechaEnvio; // Restauramos la fecha original
+
+            _repository.Update(consultaContacto);
+            return await _repository.SaveChangesAsync();
+        }
+
         public async Task<int> DeleteConsultaContactoAsync(int id)
         {
             var consulta = await _repository.GetByIdAsync(id);
@@ -48,6 +72,6 @@ namespace Concesionaria.Application.Services
             }
             _repository.Delete(consulta);
             return await _repository.SaveChangesAsync();
-        }
+        }        
     }
 }

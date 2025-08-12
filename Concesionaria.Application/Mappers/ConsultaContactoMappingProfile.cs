@@ -10,6 +10,7 @@ namespace Concesionaria.Application.Mappers
         {
             TypeAdapterConfig<ConsultaContacto, ConsultaContactoDTO>.NewConfig();
             TypeAdapterConfig<ConsultaContactoCreacionDTO, ConsultaContacto>.NewConfig();
+            TypeAdapterConfig<ConsultaContactoActualizacionDTO, ConsultaContacto>.NewConfig();
         }
     }
 }

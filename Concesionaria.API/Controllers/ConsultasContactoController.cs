@@ -46,6 +46,20 @@ namespace Concesionaria.API.Controllers
             return CreatedAtRoute("ObtenerConsultaContacto", new { id = consultaContacto.Id }, consultaContacto);
         }
 
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> Put(int id, ConsultaContactoActualizacionDTO consultaContactoActualizacionDTO)
+        {
+            var consultaContacto = await _consultaContactoService.GetConsultaContactoByIdAsync(id);
+
+            if (consultaContacto == null)
+            {
+                return NotFound();
+            }
+
+            await _consultaContactoService.UpdateConsultaContactoAsync(id, consultaContactoActualizacionDTO);
+            return NoContent();
+        }
+
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
