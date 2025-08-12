@@ -1,7 +1,8 @@
 ﻿using Concesionaria.Application.Interfaces;
+using Concesionaria.Application.Mappers;
 using Concesionaria.Application.Services;
+using Mapster;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 
 namespace Concesionaria.Application.Extensions
 {
@@ -9,11 +10,12 @@ namespace Concesionaria.Application.Extensions
     {
         public static IServiceCollection AddApplicationLayer(this IServiceCollection services)
         {
-
-            services.AddAutoMapper(cfg => { }, Assembly.GetExecutingAssembly());
+            // Registrar Mapster
+            services.AddMapster();
+            ConsultaContactoMappingConfig.RegisterMappings();
 
             //services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-           services.AddScoped<IConsultaContactoService, ConsultaContactoService>();
+            services.AddScoped<IConsultaContactoService, ConsultaContactoService>();
 
             return services;
         }

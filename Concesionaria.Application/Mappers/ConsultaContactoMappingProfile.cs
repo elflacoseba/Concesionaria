@@ -1,16 +1,15 @@
-﻿using AutoMapper;
+﻿using Mapster;
 using Concesionaria.Application.DTOs;
 using Concesionaria.Domain.Entities;
 
 namespace Concesionaria.Application.Mappers
 {
-    public class ConsultaContactoMappingProfile : Profile
+    public static class ConsultaContactoMappingConfig
     {
-        public ConsultaContactoMappingProfile()
+        public static void RegisterMappings()
         {
-            CreateMap<ConsultaContacto, ConsultaContactoDTO>();
-
-            CreateMap<ConsultaContactoCreacionDTO, ConsultaContacto>();
+            TypeAdapterConfig<ConsultaContacto, ConsultaContactoDTO>.NewConfig();
+            TypeAdapterConfig<ConsultaContactoCreacionDTO, ConsultaContacto>.NewConfig();
         }
     }
 }

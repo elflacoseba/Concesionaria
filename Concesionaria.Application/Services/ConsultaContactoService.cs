@@ -1,34 +1,29 @@
-﻿using AutoMapper;
-using Concesionaria.Application.DTOs;
+﻿using Concesionaria.Application.DTOs;
 using Concesionaria.Application.Interfaces;
 using Concesionaria.Domain.Entities;
-using System.Threading.Tasks;
+using Mapster;
 
 namespace Concesionaria.Application.Services
 {
-    public class ConsultaContactoService :IConsultaContactoService
+    public class ConsultaContactoService : IConsultaContactoService
     {
         private readonly IGenericRepository<ConsultaContacto> _repository;
-        private readonly IMapper _mapper;
 
-        public ConsultaContactoService(IGenericRepository<ConsultaContacto> repository, IMapper  mapper)
+        public ConsultaContactoService(IGenericRepository<ConsultaContacto> repository)
         {
             _repository = repository;
-            _mapper = mapper;
         }
 
         public async Task<IEnumerable<ConsultaContactoDTO>> GetAllConsultasContactoAsync()
         {
             var consultas = await _repository.GetAllAsync();
-            
-            return _mapper.Map<IEnumerable<ConsultaContactoDTO>>(consultas);
+            return consultas.Adapt<IEnumerable<ConsultaContactoDTO>>();
         }
 
         public async Task<ConsultaContactoDTO> GetConsultaContactoByIdAsync(int id)
         {
             var consulta = await _repository.GetByIdAsync(id);
-
-            return _mapper.Map<ConsultaContactoDTO>(consulta);
+            return consulta.Adapt<ConsultaContactoDTO>();
         }
 
         public async Task<ConsultaContactoDTO> CreateConsultaContactoAsync(ConsultaContactoCreacionDTO consultaContactoCreacionDTO)
@@ -37,23 +32,20 @@ namespace Concesionaria.Application.Services
             {
                 throw new ArgumentNullException(nameof(consultaContactoCreacionDTO), "ConsultaContactoCreacionDTO no puede ser nulo.");
             }
-            var consultaContacto = _mapper.Map<ConsultaContacto>(consultaContactoCreacionDTO);
+            var consultaContacto = consultaContactoCreacionDTO.Adapt<ConsultaContacto>();
             await _repository.AddAsync(consultaContacto);
             await _repository.SaveChangesAsync();
 
-            return await Task.FromResult(_mapper.Map<ConsultaContactoDTO>(consultaContacto));
-
+            return consultaContacto.Adapt<ConsultaContactoDTO>();
         }
 
         public async Task<int> DeleteConsultaContactoAsync(int id)
         {
             var consulta = await _repository.GetByIdAsync(id);
-            
             if (consulta == null)
             {
-                throw new KeyNotFoundException($"ConsultaContacto con ID {id} no encontrado.");                    
+                throw new KeyNotFoundException($"ConsultaContacto con ID {id} no encontrado.");
             }
-
             _repository.Delete(consulta);
             return await _repository.SaveChangesAsync();
         }
