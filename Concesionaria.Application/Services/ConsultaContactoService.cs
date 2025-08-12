@@ -44,7 +44,7 @@ namespace Concesionaria.Application.Services
             var consulta = await _repository.GetByIdAsync(id);
             if (consulta == null)
             {
-                throw new KeyNotFoundException($"ConsultaContacto con ID {id} no encontrado.");
+                throw new KeyNotFoundException($"ConsultaContacto con ID {id} no encontrada.");
             }
             _repository.Delete(consulta);
             return await _repository.SaveChangesAsync();

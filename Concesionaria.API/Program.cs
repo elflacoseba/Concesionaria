@@ -1,6 +1,6 @@
-
 using Concesionaria.Application.Extensions;
 using Concesionaria.Infrastructure.Extensions;
+using Concesionaria.API.Middlewares;
 
 namespace Concesionaria.API
 {
@@ -29,8 +29,9 @@ namespace Concesionaria.API
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            app.UseExceptionMiddleware();
 
+            app.UseAuthorization();
 
             app.MapControllers();
 
