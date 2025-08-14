@@ -10,11 +10,13 @@ namespace Concesionaria.Application.Services
     {
         private readonly IGenericRepository<ConsultaContacto> _repository;
         private readonly IValidator<ConsultaContactoCreacionDTO> _validatorConsultaCreacionDTO;
+        private readonly IValidator<ConsultaContactoActualizacionDTO> _validatorConsultaActualizacionDTO;
 
-        public ConsultaContactoService(IGenericRepository<ConsultaContacto> repository, IValidator<ConsultaContactoCreacionDTO> validatorConsultaCreacionDTO)
+        public ConsultaContactoService(IGenericRepository<ConsultaContacto> repository, IValidator<ConsultaContactoCreacionDTO> validatorConsultaCreacionDTO, IValidator<ConsultaContactoActualizacionDTO> validatorConsultaActualizacionDTO)
         {
             _repository = repository;
             _validatorConsultaCreacionDTO = validatorConsultaCreacionDTO;
+            _validatorConsultaActualizacionDTO = validatorConsultaActualizacionDTO;
         }
 
         public async Task<IEnumerable<ConsultaContactoDTO>> GetAllConsultasContactoAsync()
@@ -62,6 +64,13 @@ namespace Concesionaria.Application.Services
             if (consultaContacto == null)
             {
                 throw new KeyNotFoundException($"ConsultaContacto con ID {id} no encontrada.");
+            }
+
+            var validationResult = await _validatorConsultaActualizacionDTO.ValidateAsync(consultaContactoActualizacionDTO);
+
+            if (!validationResult.IsValid)
+            {
+                throw new ValidationException(validationResult.Errors);
             }
 
             var fechaEnvio = consultaContacto.FechaEnvio; // Guardamos la fecha original
