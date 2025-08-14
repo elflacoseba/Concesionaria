@@ -45,7 +45,9 @@ namespace Concesionaria.API.Controllers
         [EndpointSummary("Crea una nueva consulta de contacto.")]
         [EndpointDescription("Crea una nueva consulta de contacto con los datos proporcionados. Devuelve un estado 201 Created junto con la ubicación de la nueva consulta.")]
         [ProducesResponseType<ConsultaContactoDTO>(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]        
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status400BadRequest)]
+
         public async Task<ActionResult> Post(ConsultaContactoCreacionDTO consultaContactoCreacionDTO)
         {
             if (consultaContactoCreacionDTO == null)
@@ -60,7 +62,7 @@ namespace Concesionaria.API.Controllers
         [HttpPut("{id:int}")]
         [EndpointSummary("Actualiza una consulta de contacto existente.")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<ActionResult> Put([Description("El Id de la consulta de contacto.")] int id, ConsultaContactoActualizacionDTO consultaContactoActualizacionDTO)
         {

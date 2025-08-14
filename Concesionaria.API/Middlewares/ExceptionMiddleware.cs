@@ -39,13 +39,20 @@ namespace Concesionaria.API.Middlewares
         private static Task HandleCustomValidationExceptionAsync(HttpContext context, CustomValidationException exception)
         {
             var code = HttpStatusCode.BadRequest;
+
             var result = JsonSerializer.Serialize(new
             {
-                Title = exception.Message,
+                Title = "Ha ocurrido un problema de validación.",
                 Status = (int)code,
                 Instance = context.Request.Path,
                 Errors = exception.Errors
+                    .GroupBy(error => error.PropertyName!)
+                    .ToDictionary(
+                        g => g.Key,
+                        g => g.Select(e => e.ErrorMessage).ToArray()
+                    )
             });
+
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)code;
             return context.Response.WriteAsync(result);
