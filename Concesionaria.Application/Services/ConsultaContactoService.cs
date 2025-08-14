@@ -1,6 +1,7 @@
 ﻿using Concesionaria.Application.DTOs;
 using Concesionaria.Application.Interfaces;
 using Concesionaria.Domain.Entities;
+using FluentValidation;
 using Mapster;
 
 namespace Concesionaria.Application.Services
@@ -8,10 +9,12 @@ namespace Concesionaria.Application.Services
     public class ConsultaContactoService : IConsultaContactoService
     {
         private readonly IGenericRepository<ConsultaContacto> _repository;
+        private readonly IValidator<ConsultaContactoCreacionDTO> _validatorConsultaCreacionDTO;
 
-        public ConsultaContactoService(IGenericRepository<ConsultaContacto> repository)
+        public ConsultaContactoService(IGenericRepository<ConsultaContacto> repository, IValidator<ConsultaContactoCreacionDTO> validatorConsultaCreacionDTO)
         {
             _repository = repository;
+            _validatorConsultaCreacionDTO = validatorConsultaCreacionDTO;
         }
 
         public async Task<IEnumerable<ConsultaContactoDTO>> GetAllConsultasContactoAsync()
@@ -32,6 +35,14 @@ namespace Concesionaria.Application.Services
             {
                 throw new ArgumentNullException(nameof(consultaContactoCreacionDTO), "ConsultaContactoCreacionDTO no puede ser nulo.");
             }
+
+            var validationResult = await _validatorConsultaCreacionDTO.ValidateAsync(consultaContactoCreacionDTO);
+
+            if (!validationResult.IsValid)
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
+
             var consultaContacto = consultaContactoCreacionDTO.Adapt<ConsultaContacto>();
             await _repository.AddAsync(consultaContacto);
             await _repository.SaveChangesAsync();

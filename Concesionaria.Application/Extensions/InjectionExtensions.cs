@@ -1,8 +1,10 @@
 ﻿using Concesionaria.Application.Interfaces;
 using Concesionaria.Application.Mappers;
 using Concesionaria.Application.Services;
+using FluentValidation;
 using Mapster;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace Concesionaria.Application.Extensions
 {
@@ -14,7 +16,7 @@ namespace Concesionaria.Application.Extensions
             services.AddMapster();
             ConsultaContactoMappingConfig.RegisterMappings();
 
-            //services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddScoped<IConsultaContactoService, ConsultaContactoService>();
 
             return services;
