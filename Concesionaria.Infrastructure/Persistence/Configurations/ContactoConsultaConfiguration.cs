@@ -14,20 +14,29 @@ namespace Concesionaria.Infrastructure.Persistence.Configurations
 
             builder.Property(v => v.Nombre)
                 .IsRequired()
-                .HasMaxLength(100);
+                .HasMaxLength(100)
+                .HasColumnOrder(2);
 
             builder.Property(v => v.Email)
                 .IsRequired()               
-                .HasMaxLength(100);
+                .HasMaxLength(100)
+                .HasColumnOrder(3);
+
+            builder.Property(v => v.Telefono)
+                .IsRequired()
+                .HasMaxLength(20)
+                .HasColumnOrder(4);
 
             builder.Property(v => v.Mensaje)
                 .IsRequired()
-                .HasMaxLength(2000);
+                .HasMaxLength(2000)
+                .HasColumnOrder(5);
 
             builder.Property(v => v.FechaEnvio)
                 .IsRequired()
                 .HasColumnType("datetime2")
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("GETUTCDATE()")
+                .HasColumnOrder(6);
         }
     }
 }
