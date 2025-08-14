@@ -1,6 +1,6 @@
+using Concesionaria.API.Middlewares;
 using Concesionaria.Application.Extensions;
 using Concesionaria.Infrastructure.Extensions;
-using Concesionaria.API.Middlewares;
 
 namespace Concesionaria.API
 {
@@ -17,14 +17,30 @@ namespace Concesionaria.API
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-            builder.Services.AddOpenApi();
+
+            builder.Services.AddSwaggerGen(opciones =>
+            {
+                opciones.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Title = "Concesionaria API",
+                    Version = "v1",
+                    Description = "Esta es una API para gestionar una concesionaria de autos.",
+                    Contact = new Microsoft.OpenApi.Models.OpenApiContact
+                    {
+                        Name = "Sebastián Enrique Serrisuela",
+                        Email = "sebaserri@gmail.com",
+                        Url = new Uri("https://elflacoseba.dev"),                        
+                    }
+                });
+            });
 
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                app.MapOpenApi();
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
 
             app.UseHttpsRedirection();
