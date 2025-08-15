@@ -25,6 +25,18 @@ namespace Concesionaria.Application.Services
             return consultas.Adapt<IEnumerable<ConsultaContactoDTO>>();
         }
 
+        public async Task<PagedResultDTO<ConsultaContactoDTO>> GetConsultasContactoPagedAsync(int pageNumber, int pageSize)
+        {
+            var (items, totalCount) = await _repository.GetPagedAsync(pageNumber, pageSize);
+            return new PagedResultDTO<ConsultaContactoDTO>
+            {
+                Items = items.Adapt<IEnumerable<ConsultaContactoDTO>>(),
+                TotalCount = totalCount,
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
+        }
+
         public async Task<ConsultaContactoDTO> GetConsultaContactoByIdAsync(int id)
         {
             var consulta = await _repository.GetByIdAsync(id);

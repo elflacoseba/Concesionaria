@@ -28,5 +28,13 @@ namespace Concesionaria.Infrastructure.Repositories
         {
             return await _context.SaveChangesAsync();
         }
+
+        public async Task<(IEnumerable<T> Items, int TotalCount)> GetPagedAsync(int pageNumber, int pageSize)
+        {
+            var query = _dbSet.AsNoTracking();
+            var totalCount = await query.CountAsync();
+            var items = await query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+            return (items, totalCount);
+        }
     }
 }

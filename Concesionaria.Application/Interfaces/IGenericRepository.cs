@@ -8,5 +8,6 @@
         void Update(T entity);
         void Delete(T entity);
         Task<int> SaveChangesAsync();
+        Task<(IEnumerable<T> Items, int TotalCount)> GetPagedAsync(int pageNumber, int pageSize);
     }
 }
