@@ -9,6 +9,7 @@ using ConcesionariaAPITests.Utilidades;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NSubstitute;
 
 namespace ConcesionariaAPITests;
 
@@ -85,6 +86,24 @@ public class ConsultasContactoPruebas : BasePruebas
         var resultado = respuesta.Value;
 
         Assert.AreEqual(expected: 1, actual: resultado!.Id,"Se espera obtener una consulta contacto con el Id = 1.");
+    }
+
+    [TestMethod]
+    public async Task GetPaged_DebeLlamar_GetConsultasContactoPagedAsync_de_ConsultaContactoService()
+    {
+        //Preparación
+        var nombreBD = Guid.NewGuid().ToString();
+        var context = ConstruirContext(nombreBD);
+
+        IConsultaContactoService consultaContactoService = Substitute.For<IConsultaContactoService>();
+       
+        var controller = new ConsultasContactoController(consultaContactoService);
+
+        //Prueba
+        var respuesta = await controller.GetPaged(1, 10);
+
+        //Verificación
+        await consultaContactoService.Received(1).GetConsultasContactoPagedAsync(1, 10);
     }
 
     [TestMethod]
