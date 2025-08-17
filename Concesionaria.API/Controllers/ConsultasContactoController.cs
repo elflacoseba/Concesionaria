@@ -1,5 +1,4 @@
 ﻿using Concesionaria.Application.DTOs;
-using Concesionaria.Application.Exceptions;
 using Concesionaria.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
