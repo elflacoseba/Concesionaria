@@ -21,8 +21,8 @@ public class ConsultasContactoPruebas : BasePruebas
         var context = ConstruirContext(nombreBD);
         //var mapper = ConfigurarMapper();
         IGenericRepository<ConsultaContacto> repository = new GenericRepository<ConsultaContacto>(context);
-        IValidator<ConsultaContactoCreacionDTO> validatorConsultaCreacionDTO = null;
-        IValidator<ConsultaContactoActualizacionDTO> validatorConsultaActualizacionDTO = null;
+        IValidator<ConsultaContactoCreacionDTO> validatorConsultaCreacionDTO = null!;
+        IValidator<ConsultaContactoActualizacionDTO> validatorConsultaActualizacionDTO = null!;
 
         var consultaContactoService = new ConsultaContactoService(repository, validatorConsultaCreacionDTO, validatorConsultaActualizacionDTO);
         var controller = new ConsultasContactoController(consultaContactoService);
@@ -46,8 +46,8 @@ public class ConsultasContactoPruebas : BasePruebas
       //  var mapper = ConfigurarMapper();
         var context2 = ConstruirContext(nombreBD);
         IGenericRepository<ConsultaContacto> repository = new GenericRepository<ConsultaContacto>(context2);
-        IValidator<ConsultaContactoCreacionDTO> validatorConsultaCreacionDTO = null;
-        IValidator<ConsultaContactoActualizacionDTO> validatorConsultaActualizacionDTO = null;
+        IValidator<ConsultaContactoCreacionDTO> validatorConsultaCreacionDTO = null!;
+        IValidator<ConsultaContactoActualizacionDTO> validatorConsultaActualizacionDTO = null!;
         var consultaContactoService = new ConsultaContactoService(repository, validatorConsultaCreacionDTO, validatorConsultaActualizacionDTO);
 
         context.ConsultasContacto.Add(new ConsultaContacto
