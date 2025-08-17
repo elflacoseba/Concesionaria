@@ -17,7 +17,7 @@ public class ConsultasContactoPruebas : BasePruebas
     public async Task Get_Retorna404_CuandoConsutaContactoConIdNoExiste()
     {
         //Preparación
-        var nombreBD = new Guid().ToString();
+        var nombreBD = Guid.NewGuid().ToString();
         var context = ConstruirContext(nombreBD);
         //var mapper = ConfigurarMapper();
         IGenericRepository<ConsultaContacto> repository = new GenericRepository<ConsultaContacto>(context);
@@ -41,7 +41,7 @@ public class ConsultasContactoPruebas : BasePruebas
     {
         //Preparación
 
-        var nombreBD = new Guid().ToString();
+        var nombreBD = Guid.NewGuid().ToString();
         var context = ConstruirContext(nombreBD);
       //  var mapper = ConfigurarMapper();
         var context2 = ConstruirContext(nombreBD);
