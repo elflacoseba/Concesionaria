@@ -11,6 +11,10 @@ namespace Concesionaria.Application.Validators
                 .NotNull().WithMessage("El nombre es requerido.")
                 .NotEmpty().WithMessage("El nombre es obligatorio.")
                 .MaximumLength(100).WithMessage("El nombre no puede exceder los 100 caracteres.");
+            RuleFor(x => x.Apellido)
+                .NotNull().WithMessage("El apellido es requerido.")
+                .NotEmpty().WithMessage("El apellido es obligatorio.")
+                .MaximumLength(100).WithMessage("El apellido no puede exceder los 100 caracteres.");
             RuleFor(x => x.Email)
                 .NotNull().WithMessage("El email es requerido.")
                 .NotEmpty().WithMessage("El email es obligatorio.")

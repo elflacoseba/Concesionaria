@@ -120,7 +120,8 @@ public class ConsultasContactoPruebas : BasePruebas
 
         var consultaContactoCreacionDTO = new ConsultaContactoCreacionDTO
         {
-            Nombre = "Nombre1",
+            Nombre = "Sebastián",
+            Apellido = "Serrisuela",
             Email = "miemail@gmail.com",
             Telefono = "123456789",
             Mensaje = "Mensaje de prueba"

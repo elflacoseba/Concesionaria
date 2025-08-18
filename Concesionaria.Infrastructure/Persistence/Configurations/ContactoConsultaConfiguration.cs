@@ -12,7 +12,15 @@ namespace Concesionaria.Infrastructure.Persistence.Configurations
 
             builder.HasKey(v => v.Id);
 
+            builder.Property(v => v.Id)
+                .HasColumnOrder(0);
+
             builder.Property(v => v.Nombre)
+                .IsRequired()
+                .HasMaxLength(100)
+                .HasColumnOrder(1);
+
+            builder.Property(v => v.Apellido)
                 .IsRequired()
                 .HasMaxLength(100)
                 .HasColumnOrder(2);
