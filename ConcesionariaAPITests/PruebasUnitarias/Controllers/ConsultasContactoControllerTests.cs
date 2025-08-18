@@ -200,5 +200,42 @@ namespace Concesionaria.API.Tests.Controllers
             // Assert
             Assert.IsInstanceOfType(result, typeof(NoContentResult));
         }
+        [TestMethod]
+        public async Task MarcarComoLeida_ReturnsNotFound_WhenConsultaNotFound()
+        {
+            // Arrange
+            _serviceMock!.Setup(s => s.GetConsultaContactoByIdAsync(1)).ReturnsAsync((ConsultaContactoDTO)null!);
+
+            // Act
+            var result = await _controller!.MarcarComoLeida(1, true);
+
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(NotFoundResult));
+        }
+
+        [TestMethod]
+        public async Task MarcarComoLeida_ReturnsNoContent_WhenConsultaFound()
+        {
+            // Arrange
+            var consulta = new ConsultaContactoDTO
+            {
+                Id = 1,
+                Nombre = "Test",
+                Apellido = "Apellido",
+                Email = "test@mail.com",
+                Telefono = "123",
+                Mensaje = "Mensaje",
+                FechaEnvio = DateTime.Now,
+                NoLeida = true
+            };
+            _serviceMock!.Setup(s => s.GetConsultaContactoByIdAsync(1)).ReturnsAsync(consulta);
+            _serviceMock.Setup(s => s.MarcarConsultaComoLeidaAsync(1, true)).ReturnsAsync(1);
+
+            // Act
+            var result = await _controller!.MarcarComoLeida(1, true);
+
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(NoContentResult));
+        }
     }
 }

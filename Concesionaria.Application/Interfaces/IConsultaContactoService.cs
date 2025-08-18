@@ -10,6 +10,7 @@ namespace Concesionaria.Application.Interfaces
         Task<ConsultaContactoDTO> GetConsultaContactoByIdAsync(int id);
         Task<ConsultaContactoDTO> CreateConsultaContactoAsync(ConsultaContactoCreacionDTO consultaContactoCreacionDTO);
         Task<int> UpdateConsultaContactoAsync(int id, ConsultaContactoActualizacionDTO consultaContactoActualizacionDTO);
+        Task<int> MarcarConsultaComoLeidaAsync(int id, bool leida);
         Task<int> DeleteConsultaContactoAsync(int id);
     }
 }

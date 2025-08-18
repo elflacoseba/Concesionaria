@@ -27,9 +27,7 @@ namespace Concesionaria.Application.Validators
             RuleFor(x => x.Mensaje)
                 .NotNull().WithMessage("El mensaje es requerido.")
                 .NotEmpty().WithMessage("El mensaje es obligatorio.")
-                .MaximumLength(2000).WithMessage("El mensaje no puede exceder los 2000 caracteres.");
-            RuleFor(x => x.NoLeida)
-                .NotNull().WithMessage("El estado de 'No Leída' es requerido.");
+                .MaximumLength(2000).WithMessage("El mensaje no puede exceder los 2000 caracteres.");            
         }
     }
 }

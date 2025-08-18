@@ -95,6 +95,20 @@ namespace Concesionaria.Application.Services
             return await _repository.SaveChangesAsync();
         }
 
+        public async Task<int> MarcarConsultaComoLeidaAsync(int id, bool leida)
+        {
+            var consulta = await _repository.GetByIdAsync(id);
+
+            if (consulta == null)
+                throw new KeyNotFoundException($"ConsultaContacto con ID {id} no encontrada.");
+
+            consulta.NoLeida = !leida;
+            consulta.FechaLectura = leida ? DateTime.UtcNow : null;
+
+            _repository.Update(consulta);
+            return await _repository.SaveChangesAsync();
+        }
+
         public async Task<int> DeleteConsultaContactoAsync(int id)
         {
             var consulta = await _repository.GetByIdAsync(id);

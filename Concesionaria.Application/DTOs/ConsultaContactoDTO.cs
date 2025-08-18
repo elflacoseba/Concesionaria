@@ -10,5 +10,6 @@
         public string Mensaje { get; set; } = string.Empty;
         public DateTime FechaEnvio { get; set; } = DateTime.UtcNow;
         public bool NoLeida { get; set; } 
+        public DateTime? FechaLectura { get; set; } = null;
     }
 }

@@ -78,6 +78,24 @@ namespace Concesionaria.API.Controllers
             return NoContent();
         }
 
+        [HttpPatch("{id:int}/leida")]
+        [EndpointSummary("Marca una consulta de contacto como leída o no leída.")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<ActionResult> MarcarComoLeida([FromRoute][Description("El Id de la consulta de contacto.")] int id, [FromQuery][Description("Indica si la consulta de contacto se marcará como leída o no leída.")] bool leida)
+        {
+            var consultaContacto = await _consultaContactoService.GetConsultaContactoByIdAsync(id);
+
+            if (consultaContacto == null)
+            {
+                return NotFound();
+            }
+
+            await _consultaContactoService.MarcarConsultaComoLeidaAsync(id, leida);
+
+            return NoContent();
+        }
+
         [HttpDelete("{id:int}")]
         [EndpointSummary("Elimina una consulta de contacto por su Id.")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

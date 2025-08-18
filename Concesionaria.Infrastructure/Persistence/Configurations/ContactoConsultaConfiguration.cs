@@ -51,6 +51,10 @@ namespace Concesionaria.Infrastructure.Persistence.Configurations
                 .HasColumnType("bit")
                 .HasDefaultValue(true)
                 .HasColumnOrder(7);
+
+            builder.Property(v => v.FechaLectura)                
+                .HasColumnType("datetime2")                
+                .HasColumnOrder(8);
         }
     }
 }
