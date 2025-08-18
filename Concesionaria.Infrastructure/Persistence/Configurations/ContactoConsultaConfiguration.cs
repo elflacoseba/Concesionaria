@@ -45,6 +45,12 @@ namespace Concesionaria.Infrastructure.Persistence.Configurations
                 .HasColumnType("datetime2")
                 .HasDefaultValueSql("GETUTCDATE()")
                 .HasColumnOrder(6);
+
+            builder.Property(v => v.NoLeida)
+                .IsRequired()
+                .HasColumnType("bit")
+                .HasDefaultValue(true)
+                .HasColumnOrder(7);
         }
     }
 }
