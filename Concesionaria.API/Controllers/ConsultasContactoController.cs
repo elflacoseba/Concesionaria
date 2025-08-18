@@ -113,5 +113,14 @@ namespace Concesionaria.API.Controllers
 
             return NoContent();
         }
+
+        [HttpGet("filtrar")]
+        [EndpointSummary("Filtra las consultas de contacto por estado de lectura.")]
+        [ProducesResponseType<IEnumerable<ConsultaContactoDTO>>(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<ConsultaContactoDTO>>> FiltrarPorNoLeida([FromQuery][Description("Indica que la consulta de contacto se filtrará por el estado de no leída.")] bool noLeida)
+        {
+            var consultas = await _consultaContactoService.GetConsultasPorEstadoNoLeidaAsync(noLeida);
+            return Ok(consultas);
+        }
     }
 }

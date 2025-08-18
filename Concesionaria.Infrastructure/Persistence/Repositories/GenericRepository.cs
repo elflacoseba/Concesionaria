@@ -1,5 +1,6 @@
 ﻿using Concesionaria.Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Concesionaria.Infrastructure.Repositories
 {
@@ -35,6 +36,11 @@ namespace Concesionaria.Infrastructure.Repositories
             var totalCount = await query.CountAsync();
             var items = await query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
             return (items, totalCount);
+        }
+
+        public async Task<IEnumerable<T>> GetByPredicateAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await _dbSet.AsNoTracking().Where(predicate).ToListAsync();
         }
     }
 }

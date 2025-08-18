@@ -119,5 +119,11 @@ namespace Concesionaria.Application.Services
             _repository.Delete(consulta);
             return await _repository.SaveChangesAsync();
         }        
+
+        public async Task<IEnumerable<ConsultaContactoDTO>> GetConsultasPorEstadoNoLeidaAsync(bool noLeida)
+        {
+            var consultas = await _repository.GetByPredicateAsync(c => c.NoLeida == noLeida);
+            return consultas.Adapt<IEnumerable<ConsultaContactoDTO>>();
+        }
     }
 }

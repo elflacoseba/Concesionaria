@@ -1,4 +1,6 @@
-﻿namespace Concesionaria.Application.Interfaces
+﻿using System.Linq.Expressions;
+
+namespace Concesionaria.Application.Interfaces
 {
     public interface IGenericRepository<T> where T : class
     {
@@ -9,5 +11,6 @@
         void Delete(T entity);
         Task<int> SaveChangesAsync();
         Task<(IEnumerable<T> Items, int TotalCount)> GetPagedAsync(int pageNumber, int pageSize);
+        Task<IEnumerable<T>> GetByPredicateAsync(Expression<Func<T, bool>> predicate);
     }
 }

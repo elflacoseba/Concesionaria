@@ -237,5 +237,44 @@ namespace Concesionaria.API.Tests.Controllers
             // Assert
             Assert.IsInstanceOfType(result, typeof(NoContentResult));
         }
+        [TestMethod]
+        public async Task FiltrarPorNoLeida_ReturnsOkResult_WithFilteredConsultas()
+        {
+            // Arrange
+            var consultas = new List<ConsultaContactoDTO>
+            {
+                new ConsultaContactoDTO
+                {
+                    Id = 1,
+                    Nombre = "Juan",
+                    Apellido = "Pérez",
+                    Email = "juan@mail.com",
+                    Telefono = "123456",
+                    Mensaje = "Consulta 1",
+                    FechaEnvio = DateTime.Now,
+                    NoLeida = true
+                },
+                new ConsultaContactoDTO
+                {
+                    Id = 2,
+                    Nombre = "Ana",
+                    Apellido = "García",
+                    Email = "ana@mail.com",
+                    Telefono = "654321",
+                    Mensaje = "Consulta 2",
+                    FechaEnvio = DateTime.Now,
+                    NoLeida = true
+                }
+            };
+            _serviceMock!.Setup(s => s.GetConsultasPorEstadoNoLeidaAsync(true)).ReturnsAsync(consultas);
+
+            // Act
+            var result = await _controller!.FiltrarPorNoLeida(true);
+
+            // Assert
+            var okResult = result.Result as OkObjectResult;
+            Assert.IsNotNull(okResult);
+            Assert.AreEqual(consultas, okResult.Value);
+        }
     }
 }
