@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concesionaria.API", "Conces
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConcesionariaAPITests", "ConcesionariaAPITests\ConcesionariaAPITests.csproj", "{0A3210FC-E5F5-4D8C-A309-3C0A6C24659C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concesionaria.Admin", "Concesionaria.Admin\Concesionaria.Admin.csproj", "{D009F5D2-4C27-7B50-2165-CD42FC134D08}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{0A3210FC-E5F5-4D8C-A309-3C0A6C24659C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A3210FC-E5F5-4D8C-A309-3C0A6C24659C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A3210FC-E5F5-4D8C-A309-3C0A6C24659C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D009F5D2-4C27-7B50-2165-CD42FC134D08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D009F5D2-4C27-7B50-2165-CD42FC134D08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D009F5D2-4C27-7B50-2165-CD42FC134D08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D009F5D2-4C27-7B50-2165-CD42FC134D08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{BAAD6908-198A-4589-BA54-C934789DE24C} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{2B1050B3-B774-4C92-8599-A718170A2866} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{0A3210FC-E5F5-4D8C-A309-3C0A6C24659C} = {FB91AE33-E089-4C27-9626-97FF8DFA39CA}
+		{D009F5D2-4C27-7B50-2165-CD42FC134D08} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {143961BD-6058-4C39-9846-F7B8189F705A}
