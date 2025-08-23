@@ -1,6 +1,5 @@
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Concesionaria.Admin.Services;
 using Concesionaria.Admin.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Concesionaria.Admin.Pages.ConsultaContacto
 {
@@ -9,7 +8,7 @@ namespace Concesionaria.Admin.Pages.ConsultaContacto
         private readonly IConsultasContactoService _consultasContactoService;
         public IEnumerable<Models.ConsultaContacto>? ConsultasContacto { get; set; }
 
-        public ConsultasContactoModel(ConsultasContactoService consultasContactoService)
+        public ConsultasContactoModel(IConsultasContactoService consultasContactoService)
         {
             _consultasContactoService = consultasContactoService;
         }

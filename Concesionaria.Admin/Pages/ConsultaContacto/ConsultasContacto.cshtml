@@ -9,12 +9,13 @@
 {
     <!-- Datatables css -->
     <link href="~/plugins/datatables/responsive.bootstrap5.min.css" rel="stylesheet" type="text/css">
+    <!-- SweetAlert2 css -->
+    <link href="~/plugins/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
 }
 
 <div class="container-fluid">
 
     @await Html.PartialAsync("~/Pages/Shared/Partials/_PageTitle.cshtml")
-
 
     <div class="row justify-content-center">
         <div class="col-xxl-10">
@@ -35,6 +36,7 @@
                                 <th>Consulta</th>
                                 <th>Enviada</th>
                                 <th>Estado</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -45,11 +47,12 @@
                                     <tr>
                                         <td>@consulta.Nombre</td>
                                         <td>@consulta.Apellido</td>
-                                        <td><a href="mailto:@consulta.Email" title="Haga clic para enviar un e-mail." >@consulta.Email</a></td>
+                                        <td><a href="mailto:@consulta.Email" title="Haga clic para enviar un e-mail.">@consulta.Email</a></td>
                                         <td>@consulta.Telefono</td>
                                         <td>@consulta.Mensaje</td>
                                         <td>@consulta.FechaEnvio.ToString("g")</td>
-                                        <td>@if(consulta.NoLeida)
+                                        <td>
+                                            @if (consulta.NoLeida)
                                             {
                                                 <span class="badge text-bg-danger">No leída</span>
                                             }
@@ -58,21 +61,26 @@
                                                 <span>Leída</span>
                                             }
                                         </td>
+                                        <td>
+                                            <button type="button"
+                                                    class="btn btn-sm btn-primary"
+                                                    onclick="mostrarDetalleConsultaSweetAlert(@consulta.Id)">Abrir</button>
+                                        </td>
                                     </tr>
                                 }
                             }
                             else
                             {
                                 <tr>
-                                    <td colspan="7" class="text-center">No hay datos disponibles.</td>
+                                    <td colspan="8" class="text-center">No hay datos disponibles.</td>
                                 </tr>
                             }
                         </tbody>
                     </table>
                 </div> <!-- end card-body-->
-            </div> <!-- end card-->            
+            </div> <!-- end card-->
         </div>
-    </div>
+    </div>    
 
 </div>
 
@@ -83,6 +91,8 @@
     <script src="~/plugins/datatables/dataTables.bootstrap5.min.js"></script>
     <script src="~/plugins/datatables/dataTables.responsive.min.js"></script>
     <script src="~/plugins/datatables/responsive.bootstrap5.min.js"></script>
+    <!-- SweetAlert2 js -->
+    <script src="~/plugins/sweetalert2/sweetalert2.min.js"></script>
 
     <script>
         new DataTable('[data-tables="basic"]', {
@@ -95,7 +105,31 @@
                     last: '<i class="ti ti-chevrons-right"></i>'    // Tabler Last
                 }
             }
-        });
+        });     
 
+        function mostrarDetalleConsultaSweetAlert(id) {
+            Swal.fire({
+                title: 'Cargando...',
+                html: 'Por favor espere...',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                    fetch(`/consulta-contacto-detalle/${id}`)
+                        .then(response => response.text())
+                        .then(html => {
+                            Swal.fire({
+                                title: 'Detalle de Consulta',
+                                html: html,
+                                width: '60vw',
+                                showCloseButton: true,
+                                showConfirmButton: false
+                            });
+                        })
+                        .catch(() => {
+                            Swal.fire('Error', 'No se pudo cargar el detalle.', 'error');
+                        });
+                }
+            });
+        }
     </script>
 }

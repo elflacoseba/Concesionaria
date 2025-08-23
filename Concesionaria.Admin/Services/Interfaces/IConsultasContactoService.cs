@@ -5,5 +5,6 @@ namespace Concesionaria.Admin.Services.Interfaces
     public interface IConsultasContactoService
     {
         Task<IEnumerable<ConsultaContacto>?> GetConsultasContactoAsync();
+        Task<ConsultaContacto?> GetConsultaContactoByIdAsync(int id);
     }
 }

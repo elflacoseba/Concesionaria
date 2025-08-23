@@ -1,0 +1,48 @@
+@page "/consulta-contacto-detalle/{id:int}"
+@model Concesionaria.Admin.Pages.ConsultaContacto.DetalleConsultaModel
+@{
+    ViewBag.Title = "Detalle de consulta de contacto";
+    Layout = null;
+}
+
+@section styles
+{
+}
+
+<div class="overflow-hidden align-items-center d-flex">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                    @if (Model.ConsultaDetalle is null)
+                    {
+                        <div class="alert alert-danger">No se encontró la consulta.</div>
+                    }
+                    else
+                    {
+                        <div class="card">
+                            <div class="card-header d-block">
+                                <h4 class="bold mb-1">@($"{Model.ConsultaDetalle.Nombre} {Model.ConsultaDetalle.Apellido}")</h4>
+                                <h5> @($"{Model.ConsultaDetalle.Email} | {Model.ConsultaDetalle.Telefono}")</h5>
+                            </div>
+
+                            <div class="card-body">
+                                <blockquote class="card-bodyquote mb-0">
+                                    <p class="text-body">
+                                        @Model.ConsultaDetalle.Mensaje
+                                    </p>
+                                </blockquote>
+                            </div> <!-- end card-body-->
+                            <div class="card-footer" >
+                                <h6 class="card-subtitle text-body-secondary">Recibida el @Model.ConsultaDetalle.FechaEnvio.ToString("g")</h6>
+                            </div>
+                        </div>
+                    }                  
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+}

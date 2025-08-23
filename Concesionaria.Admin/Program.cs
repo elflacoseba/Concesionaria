@@ -1,3 +1,6 @@
+using Concesionaria.Admin.Services.Interfaces;
+using Concesionaria.Admin.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
@@ -9,7 +12,7 @@ builder.Services.AddHttpClient("ConsultasContactoApi", client =>
 {
     client.BaseAddress = new Uri(configuration["API_URL_BASE"]!);
 });
-builder.Services.AddScoped<Concesionaria.Admin.Services.ConsultasContactoService>();
+builder.Services.AddScoped<IConsultasContactoService, ConsultasContactoService>();
 
 var app = builder.Build();
 
