@@ -12,16 +12,16 @@
 
     // Default config
     const defaultConfig = {
-        skin: "classic",
-        theme: "system",
+        skin: "modern",
+        theme: "light",
         layout: {
             position: "fixed",
         },
         topbar: {
-            color: "light",
+            color: "gray",
         },
         menu: {
-            color: "dark",
+            color: "gray",
         },
         sidenav: {
             size: "default",
