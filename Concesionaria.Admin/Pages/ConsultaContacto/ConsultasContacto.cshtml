@@ -1,0 +1,101 @@
+﻿@page "/consultas-contacto"
+@model Concesionaria.Admin.Pages.ConsultaContacto.ConsultasContactoModel
+@{
+    ViewBag.Title = "Consultas de contacto";
+    ViewBag.SubTitle = "Listado";
+}
+
+@section styles
+{
+    <!-- Datatables css -->
+    <link href="~/plugins/datatables/responsive.bootstrap5.min.css" rel="stylesheet" type="text/css">
+}
+
+<div class="container-fluid">
+
+    @await Html.PartialAsync("~/Pages/Shared/Partials/_PageTitle.cshtml")
+
+
+    <div class="row justify-content-center">
+        <div class="col-xxl-10">
+            <div class="card">
+                <div class="card-header justify-content-between">
+                    <h4 class="card-title"> Listado de Consultas de contacto </h4>
+                    @* <a href="https://datatables.net/examples/basic_init/zero_configuration" target="_blank" class="icon-link icon-link-hover link-primary fw-semibold">View Docs <i class="ti ti-arrow-right bi align-middle fs-lg"></i></a> *@
+                </div>
+
+                <div class="card-body">
+                    <table data-tables="basic" class="table table-striped dt-responsive align-middle mb-0">
+                        <thead class="thead-sm text-uppercase fs-xxs">
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>E-mail</th>
+                                <th>Teléfono</th>
+                                <th>Consulta</th>
+                                <th>Enviada</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.ConsultasContacto != null)
+                            {
+                                foreach (var consulta in Model.ConsultasContacto)
+                                {
+                                    <tr>
+                                        <td>@consulta.Nombre</td>
+                                        <td>@consulta.Apellido</td>
+                                        <td><a href="mailto:@consulta.Email" title="Haga clic para enviar un e-mail." >@consulta.Email</a></td>
+                                        <td>@consulta.Telefono</td>
+                                        <td>@consulta.Mensaje</td>
+                                        <td>@consulta.FechaEnvio.ToString("g")</td>
+                                        <td>@if(consulta.NoLeida)
+                                            {
+                                                <span class="badge text-bg-danger">No leída</span>
+                                            }
+                                            else
+                                            {
+                                                <span>Leída</span>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="7" class="text-center">No hay datos disponibles.</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div> <!-- end card-body-->
+            </div> <!-- end card-->            
+        </div>
+    </div>
+
+</div>
+
+@section scripts
+{
+    <!-- Datatables js -->
+    <script src="~/plugins/datatables/dataTables.min.js"></script>
+    <script src="~/plugins/datatables/dataTables.bootstrap5.min.js"></script>
+    <script src="~/plugins/datatables/dataTables.responsive.min.js"></script>
+    <script src="~/plugins/datatables/responsive.bootstrap5.min.js"></script>
+
+    <script>
+        new DataTable('[data-tables="basic"]', {
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-AR.json',
+                paginate: {
+                    first: '<i class="ti ti-chevrons-left"></i>',   // Tabler First
+                    previous: '<i class="ti ti-chevron-left"></i>', // Tabler Prev
+                    next: '<i class="ti ti-chevron-right"></i>',    // Tabler Next
+                    last: '<i class="ti ti-chevrons-right"></i>'    // Tabler Last
+                }
+            }
+        });
+
+    </script>
+}
