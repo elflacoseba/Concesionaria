@@ -15,8 +15,16 @@ namespace Concesionaria.API.Controllers
         {
             _consultaContactoService = consultaContactoService;
         }
-        
+
         [HttpGet]
+        [EndpointSummary("Obtiene todas las consultas de contacto.")]
+        [ProducesResponseType<IEnumerable<ConsultaContactoDTO>>(StatusCodes.Status200OK)]
+        public async Task<IEnumerable<ConsultaContactoDTO>> Get()
+        {
+            return await _consultaContactoService.GetAllConsultasContactoAsync();
+        }
+
+        [HttpGet("GetPaged")]
         [EndpointSummary("Obtiene las consultas de contacto paginadas.")]
         [ProducesResponseType(typeof(PagedResultDTO<ConsultaContactoDTO>), StatusCodes.Status200OK)]
         public async Task<ActionResult<PagedResultDTO<ConsultaContactoDTO>>> GetPaged([FromQuery][Description("Indica el número de página.")] int pageNumber = 1, [FromQuery][Description("Indica la cantidad de registros por página")] int pageSize = 10)
