@@ -1,7 +1,15 @@
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+// Registrar HttpClientFactory y el servicio personalizado
+builder.Services.AddHttpClient("ConsultasContactoApi", client =>
+{
+    client.BaseAddress = new Uri(configuration["API_URL_BASE"]!);
+});
+builder.Services.AddScoped<Concesionaria.Admin.Services.ConsultasContactoService>();
 
 var app = builder.Build();
 

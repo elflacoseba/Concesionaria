@@ -1,17 +1,22 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Concesionaria.Admin.Services;
+using Concesionaria.Admin.Services.Interfaces;
 
 namespace Concesionaria.Admin.Pages.ConsultaContacto
 {
     public class ConsultasContactoModel : PageModel
     {
-        public IEnumerable<ConsultaContactoDTO>? ConsultasContacto { get; set; }
+        private readonly IConsultasContactoService _consultasContactoService;
+        public IEnumerable<Models.ConsultaContacto>? ConsultasContacto { get; set; }
+
+        public ConsultasContactoModel(ConsultasContactoService consultasContactoService)
+        {
+            _consultasContactoService = consultasContactoService;
+        }
 
         public async Task OnGetAsync()
         {
-            using var client = new HttpClient();
-            // Cambia la URL por la de tu API real
-            var apiUrl = $"https://localhost:7062/api/ConsultasContacto";
-            ConsultasContacto = await client.GetFromJsonAsync<IEnumerable<ConsultaContactoDTO>>(apiUrl);
+            ConsultasContacto = await _consultasContactoService.GetConsultasContactoAsync();
         }
     }
 }
