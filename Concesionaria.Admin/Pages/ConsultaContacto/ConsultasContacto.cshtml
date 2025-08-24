@@ -143,7 +143,10 @@
                                 html: html,
                                 width: '40vw',
                                 showCloseButton: true,
-                                showConfirmButton: false
+                                showConfirmButton: false,
+                                didClose: () => {
+                                    window.location.href = '/consultas-contacto';
+                                }
                             });
                         })
                         .catch(() => {
