@@ -1,5 +1,6 @@
 ﻿@page "/consultas-contacto"
 @model Concesionaria.Admin.Pages.ConsultaContacto.ConsultasContactoModel
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
 @{
     ViewBag.Title = "Consultas de contacto";
     ViewBag.SubTitle = "Listado";
@@ -26,13 +27,14 @@
                 </div>
 
                 <div class="card-body">
+                    <input type="hidden" name="__RequestVerificationToken" value="@Antiforgery.GetTokens(HttpContext).RequestToken" />
                     <table data-tables="basic" class="table table-striped dt-responsive align-middle mb-0">
                         <thead class="thead-sm text-uppercase fs-xxs">
                             <tr>
                                 <th>Nombre</th>
                                 <th>Apellido</th>
                                 <th>E-mail</th>
-                                <th>Teléfono</th>                                
+                                <th>Teléfono</th>
                                 <th>Enviada</th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
@@ -47,22 +49,36 @@
                                         <td>@consulta.Nombre</td>
                                         <td>@consulta.Apellido</td>
                                         <td><a href="mailto:@consulta.Email" title="Haga clic para enviar un e-mail.">@consulta.Email</a></td>
-                                        <td>@consulta.Telefono</td>                                        
+                                        <td>@consulta.Telefono</td>
                                         <td>@consulta.FechaEnvio.ToString("g")</td>
                                         <td>
                                             @if (consulta.NoLeida)
                                             {
-                                                <span class="badge text-bg-danger">No leída</span>
+                                                <button type="button"
+                                                        id="btnMarcarEstadoLeida"
+                                                        title="Marcar como leída"
+                                                        class="btn btn-sm btn-ghost-danger"
+                                                        onclick="marcarLeida(@consulta.Id, true)">
+                                                    No Leída
+                                                </button>
                                             }
                                             else
                                             {
-                                                <span>Leída</span>
+                                                <button type="button"
+                                                        id="btnMarcarEstadoNoLeida"
+                                                        title="Marcar como no leída"
+                                                        class="btn btn-sm btn-ghost-primary"
+                                                        onclick="marcarLeida(@consulta.Id, false)">
+                                                    Leída
+                                                </button>
                                             }
                                         </td>
                                         <td>
                                             <button type="button" title="Haga clic para abrir la consulta."
                                                     class="btn btn-sm btn-ghost-success"
-                                                    onclick="mostrarDetalleConsultaSweetAlert(@consulta.Id)">Abrir</button>
+                                                    onclick="mostrarDetalleConsultaSweetAlert(@consulta.Id)">
+                                                Abrir
+                                            </button>
                                         </td>
                                     </tr>
                                 }
@@ -78,8 +94,15 @@
                 </div> <!-- end card-body-->
             </div> <!-- end card-->
         </div>
-    </div>    
+    </div>
 
+    <form method="post" asp-page-handler="MarcarLeida">
+        <input type="number" name="id" value="1" />
+        <input type="text" name="leida" value="true" />
+        <input type="hidden" name="__RequestVerificationToken" value="@Antiforgery.GetTokens(HttpContext).RequestToken" />
+        <button type="submit">Test Marcar Leída</button>
+
+    </form>
 </div>
 
 @section scripts
@@ -103,7 +126,7 @@
                     last: '<i class="ti ti-chevrons-right"></i>'    // Tabler Last
                 }
             }
-        });     
+        });
 
         function mostrarDetalleConsultaSweetAlert(id) {
             Swal.fire({
@@ -127,6 +150,29 @@
                             Swal.fire('Error', 'No se pudo cargar el detalle.', 'error');
                         });
                 }
+            });
+        }
+
+        function marcarLeida(id, leida) {
+            const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+            fetch(`/consultas-contacto?handler=MarcarLeida&id=${id}&leida=${leida}`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': token
+                }
+            })
+            .then(async response => {
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    const error = await response.text();
+                    console.error('Error response:', error);
+                    Swal.fire('Error', 'No se pudo cambiar el estado.', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+                Swal.fire('Error', 'Error de conexión.', 'error');
             });
         }
     </script>

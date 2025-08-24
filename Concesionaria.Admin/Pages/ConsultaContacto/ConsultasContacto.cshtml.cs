@@ -1,4 +1,5 @@
 using Concesionaria.Admin.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Concesionaria.Admin.Pages.ConsultaContacto
@@ -16,6 +17,14 @@ namespace Concesionaria.Admin.Pages.ConsultaContacto
         public async Task OnGetAsync()
         {
             ConsultasContacto = await _consultasContactoService.GetConsultasContactoAsync();
+        }
+
+        public async Task<IActionResult> OnPostMarcarLeidaAsync(int id, bool leida)
+        {
+            var result = await _consultasContactoService.MarcarConsultaContactoLeidaByIdAsync(id, leida);
+            if (result == true)
+                return new JsonResult(new { success = true });
+            return BadRequest();
         }
     }
 }

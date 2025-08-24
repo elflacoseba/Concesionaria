@@ -5,7 +5,12 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
 // Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages()
+    .AddMvcOptions(options => 
+    {
+        options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(_ => "El campo es requerido.");
+    });
+builder.Services.AddAntiforgery(options => options.HeaderName = "X-CSRF-TOKEN");
 
 // Registrar HttpClientFactory y el servicio personalizado
 builder.Services.AddHttpClient("ConsultasContactoApi", client =>
