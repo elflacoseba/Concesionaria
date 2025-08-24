@@ -32,8 +32,7 @@
                                 <th>Nombre</th>
                                 <th>Apellido</th>
                                 <th>E-mail</th>
-                                <th>Teléfono</th>
-                                <th>Consulta</th>
+                                <th>Teléfono</th>                                
                                 <th>Enviada</th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
@@ -48,8 +47,7 @@
                                         <td>@consulta.Nombre</td>
                                         <td>@consulta.Apellido</td>
                                         <td><a href="mailto:@consulta.Email" title="Haga clic para enviar un e-mail.">@consulta.Email</a></td>
-                                        <td>@consulta.Telefono</td>
-                                        <td>@consulta.Mensaje</td>
+                                        <td>@consulta.Telefono</td>                                        
                                         <td>@consulta.FechaEnvio.ToString("g")</td>
                                         <td>
                                             @if (consulta.NoLeida)
@@ -62,8 +60,8 @@
                                             }
                                         </td>
                                         <td>
-                                            <button type="button"
-                                                    class="btn btn-sm btn-primary"
+                                            <button type="button" title="Haga clic para abrir la consulta."
+                                                    class="btn btn-sm btn-ghost-success"
                                                     onclick="mostrarDetalleConsultaSweetAlert(@consulta.Id)">Abrir</button>
                                         </td>
                                     </tr>
@@ -120,7 +118,7 @@
                             Swal.fire({
                                 title: 'Detalle de Consulta',
                                 html: html,
-                                width: '60vw',
+                                width: '40vw',
                                 showCloseButton: true,
                                 showConfirmButton: false
                             });

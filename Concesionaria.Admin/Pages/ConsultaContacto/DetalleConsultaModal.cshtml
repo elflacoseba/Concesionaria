@@ -1,5 +1,5 @@
 @page "/consulta-contacto-detalle/{id:int}"
-@model Concesionaria.Admin.Pages.ConsultaContacto.DetalleConsultaModel
+@model Concesionaria.Admin.Pages.ConsultaContacto.DetalleConsultaModalModel
 @{
     ViewBag.Title = "Detalle de consulta de contacto";
     Layout = null;
@@ -21,11 +21,13 @@
                     {
                         <div class="card">
                             <div class="card-header d-block">
-                                <h4 class="bold mb-1">@($"{Model.ConsultaDetalle.Nombre} {Model.ConsultaDetalle.Apellido}")</h4>
-                                <h5> @($"{Model.ConsultaDetalle.Email} | {Model.ConsultaDetalle.Telefono}")</h5>
+                                <h3 class="bold mb-1">@($"{Model.ConsultaDetalle.Nombre} {Model.ConsultaDetalle.Apellido}")</h3>
+                                <div class="align-top d-flex">
+                                <i class="ti ti-mail fs-2 me-1 text-primary"></i> <span>@Model.ConsultaDetalle.Email</span><span class="bold mx-2">|</span><i class="ti ti-phone fs-2 me-1 text-primary"></i> <span>@Model.ConsultaDetalle.Telefono</span>
+                                </div>
                             </div>
 
-                            <div class="card-body">
+                            <div class="card-body text-start">
                                 <blockquote class="card-bodyquote mb-0">
                                     <p class="text-body">
                                         @Model.ConsultaDetalle.Mensaje
