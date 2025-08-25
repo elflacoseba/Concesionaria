@@ -12,7 +12,7 @@
 <div class="overflow-hidden align-items-center d-flex">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-auto">
+            <div class="col-12">
                     @if (Model.ConsultaDetalle is null)
                     {
                         <div class="alert alert-danger">No se encontró la consulta.</div>
@@ -22,7 +22,7 @@
                         <div class="card">
                             <div class="card-header d-block">
                                 <h3 class="bold mb-1">@($"{Model.ConsultaDetalle.Nombre} {Model.ConsultaDetalle.Apellido}")</h3>
-                                <div class="align-top d-flex">
+                                <div class="align-top d-flex justify-content-center">
                                 <i class="ti ti-mail fs-2 me-1 text-primary"></i> <span>@Model.ConsultaDetalle.Email</span><span class="bold mx-2">|</span><i class="ti ti-phone fs-2 me-1 text-primary"></i> <span>@Model.ConsultaDetalle.Telefono</span>
                                 </div>
                             </div>
