@@ -95,14 +95,6 @@
             </div> <!-- end card-->
         </div>
     </div>
-
-    <form method="post" asp-page-handler="MarcarLeida">
-        <input type="number" name="id" value="1" />
-        <input type="text" name="leida" value="true" />
-        <input type="hidden" name="__RequestVerificationToken" value="@Antiforgery.GetTokens(HttpContext).RequestToken" />
-        <button type="submit">Test Marcar Leída</button>
-
-    </form>
 </div>
 
 @section scripts
