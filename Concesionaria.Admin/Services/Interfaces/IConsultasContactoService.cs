@@ -6,6 +6,7 @@ namespace Concesionaria.Admin.Services.Interfaces
     {
         Task<IEnumerable<ConsultaContacto>?> GetConsultasContactoAsync();
         Task<ConsultaContacto?> GetConsultaContactoByIdAsync(int id);
-        Task<bool?> MarcarConsultaContactoLeidaByIdAsync(int id, bool leida);
+        Task<bool> MarcarConsultaContactoLeidaByIdAsync(int id, bool leida);
+        Task<bool> EliminarConsultaContactoByIdAsync(int id);
     }
 }

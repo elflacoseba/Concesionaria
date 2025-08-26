@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Concesionaria.Admin.Pages.ConsultaContacto
 {
+    [AutoValidateAntiforgeryToken]
     public class ConsultasContactoModel : PageModel
     {
         private readonly IConsultasContactoService _consultasContactoService;
@@ -22,6 +23,14 @@ namespace Concesionaria.Admin.Pages.ConsultaContacto
         public async Task<IActionResult> OnPostMarcarLeidaAsync(int id, bool leida)
         {
             var result = await _consultasContactoService.MarcarConsultaContactoLeidaByIdAsync(id, leida);
+            if (result == true)
+                return new JsonResult(new { success = true });
+            return BadRequest();
+        }
+   
+        public async Task<IActionResult> OnPostEliminarConsultaAsync(int id)
+        {
+            var result = await _consultasContactoService.EliminarConsultaContactoByIdAsync(id);
             if (result == true)
                 return new JsonResult(new { success = true });
             return BadRequest();

@@ -12,7 +12,7 @@ namespace Concesionaria.Admin.Services
         public ConsultasContactoService(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
-            _apiBaseUrl = configuration["ApiBaseUrl"]!;            
+            _apiBaseUrl = configuration["ApiBaseUrl"]!;
             _client = _httpClientFactory.CreateClient("ConsultasContactoApi");
         }
 
@@ -22,13 +22,19 @@ namespace Concesionaria.Admin.Services
         }
 
         public async Task<ConsultaContacto?> GetConsultaContactoByIdAsync(int id)
-        {            
+        {
             return await _client.GetFromJsonAsync<ConsultaContacto>(_apiBaseUrl + $"ConsultasContacto/{id}");
         }
 
-        public async Task<bool?> MarcarConsultaContactoLeidaByIdAsync(int id, bool leida)
-        {            
+        public async Task<bool> MarcarConsultaContactoLeidaByIdAsync(int id, bool leida)
+        {
             var response = await _client.PatchAsync(_apiBaseUrl + $"ConsultasContacto/{id}/leida?leida={leida.ToString()}", null);
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> EliminarConsultaContactoByIdAsync(int id)
+        {            
+            var response = await _client.DeleteAsync(_apiBaseUrl + $"ConsultasContacto/{id}");
             return response.IsSuccessStatusCode;
         }
     }
