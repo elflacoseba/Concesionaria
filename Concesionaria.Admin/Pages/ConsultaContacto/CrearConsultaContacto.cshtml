@@ -1,0 +1,45 @@
+﻿@page "/Consultas-Contacto/Nueva"
+
+@model Concesionaria.Admin.Pages.ConsultaContacto.CrearConsultaContactoModel
+@{
+    ViewBag.Title = "Nueva Consulta";
+    Layout = "~/Pages/Shared/_BaseLayout.cshtml";
+}
+<div class="auth-box overflow-hidden align-items-center d-flex">
+    <div class="container">
+        <div class="row">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Form Row</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <div class="row g-2">
+                            <div class="mb-3 col-md-6">
+                                <label for="inputNombre" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="inputNombre" asp-for="ConsultaContacto.Nombre" placeholder="Nombre">
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="inputApellido" class="form-label">Apellido</label>
+                                <input type="text" class="form-control" id="inputApellido" asp-for="ConsultaContacto.Apellido" placeholder="Apellido">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputEmail4" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="inputEmail4" asp-for="ConsultaContacto.Email" placeholder="Email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputTelefono" class="form-label">Teléfono</label>
+                            <input type="text" class="form-control" id="inputTelefono" asp-for="ConsultaContacto.Telefono" placeholder="Teléfono">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputMensaje" class="form-label">Mensaje</label>
+                            <textarea class="form-control" id="inputMensaje" asp-for="ConsultaContacto.Mensaje" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enviar Consulta</button>
+                    </form>
+                </div> <!-- end card-body -->
+            </div>
+        </div>
+    </div>
+</div>

@@ -26,6 +26,23 @@ namespace Concesionaria.Admin.Services
             return await _client.GetFromJsonAsync<ConsultaContacto>(_apiBaseUrl + $"ConsultasContacto/{id}");
         }
 
+        public async Task<ConsultaContacto> CrearConsultaContactoAsync(ConsultaContactoCreacion consulta)
+        {
+            var response = await _client.PostAsJsonAsync(_apiBaseUrl + "ConsultasContacto", consulta);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var consultaCreada = await response.Content.ReadFromJsonAsync<ConsultaContacto>();
+                
+                if (consultaCreada is not null)
+                {
+                    return consultaCreada;
+                }
+                throw new Exception("La respuesta de la API fue nula al crear la consulta de contacto.");
+            }
+            throw new Exception("Error al crear la consulta de contacto");
+        }
+
         public async Task<bool> MarcarConsultaContactoLeidaByIdAsync(int id, bool leida)
         {
             var response = await _client.PatchAsync(_apiBaseUrl + $"ConsultasContacto/{id}/leida?leida={leida.ToString()}", null);
@@ -37,5 +54,6 @@ namespace Concesionaria.Admin.Services
             var response = await _client.DeleteAsync(_apiBaseUrl + $"ConsultasContacto/{id}");
             return response.IsSuccessStatusCode;
         }
+
     }
 }
