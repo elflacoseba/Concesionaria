@@ -155,7 +155,7 @@
         }
 
         function marcarLeida(id, leida) {
-            const token = window.__RequestVerificationToken;
+            const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
             fetch(`/consultas-contacto?handler=MarcarLeida&id=${id}&leida=${leida}`, {
                 method: 'POST',
                 headers: {
