@@ -53,12 +53,22 @@
                                         <td>
                                             @if (consulta.NoLeida)
                                             {
+                                                <span class="badge badge-outline-danger">No leída</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-outline-primary">Leída</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (consulta.NoLeida)
+                                            {
                                                 <button type="button"
                                                         id="btnMarcarEstadoLeida"
                                                         title="Marcar como leída"
-                                                        class="btn btn-sm btn-ghost-danger"
+                                                        class="btn btn-sm btn-ghost-primary px-1"
                                                         onclick="marcarLeida(@consulta.Id, true)">
-                                                    No Leída
+                                                    <i class="ti ti-mail-opened fs-3"></i>
                                                 </button>
                                             }
                                             else
@@ -66,25 +76,18 @@
                                                 <button type="button"
                                                         id="btnMarcarEstadoNoLeida"
                                                         title="Marcar como no leída"
-                                                        class="btn btn-sm btn-ghost-primary"
+                                                        class="btn btn-sm btn-ghost-danger px-1"
                                                         onclick="marcarLeida(@consulta.Id, false)">
-                                                    Leída
+                                                    <i class="ti ti-mail fs-3"></i>                                                    
                                                 </button>
                                             }
-                                        </td>
-                                        <td>
-                                            @* <button type="button" title="Abrir consulta"
-                                                    class="btn btn-sm btn-ghost-primary"
-                                                    onclick="mostrarDetalleConsultaSweetAlert(@consulta.Id)">
-                                                <i class="ti ti-mail-opened fs-2"></i>
-                                            </button> *@
-                                            <a href="/consultas-contacto/@consulta.Id" target="_self" title="Ver detalle de consulta" class="btn btn-sm btn-ghost-info ms-1">
-                                                <i class="ti ti-external-link fs-2"></i>
+                                            <a href="/consultas-contacto/@consulta.Id" target="_self" title="Ver detalle de consulta" class="btn btn-sm btn-ghost-info px-1">
+                                                <i class="ti ti-external-link fs-3"></i>
                                             </a>
                                             <button type="button" title="Eliminar consulta"
-                                                    class="btn btn-sm btn-ghost-danger ms-1"
+                                                    class="btn btn-sm btn-ghost-danger px-1"
                                                     onclick="confirmarEliminarConsulta(@consulta.Id)">
-                                                <i class="ti ti-trash fs-2"></i>
+                                                <i class="ti ti-trash fs-3"></i>
                                             </button>
                                         </td>
                                     </tr>
