@@ -73,11 +73,14 @@
                                             }
                                         </td>
                                         <td>
-                                            <button type="button" title="Abrir consulta"
+                                            @* <button type="button" title="Abrir consulta"
                                                     class="btn btn-sm btn-ghost-primary"
                                                     onclick="mostrarDetalleConsultaSweetAlert(@consulta.Id)">
                                                 <i class="ti ti-mail-opened fs-2"></i>
-                                            </button>
+                                            </button> *@
+                                            <a href="/consultas-contacto/@consulta.Id" target="_self" title="Ver detalle de consulta" class="btn btn-sm btn-ghost-info ms-1">
+                                                <i class="ti ti-external-link fs-2"></i>
+                                            </a>
                                             <button type="button" title="Eliminar consulta"
                                                     class="btn btn-sm btn-ghost-danger ms-1"
                                                     onclick="confirmarEliminarConsulta(@consulta.Id)">

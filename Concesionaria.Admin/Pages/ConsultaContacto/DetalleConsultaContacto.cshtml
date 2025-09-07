@@ -1,0 +1,114 @@
+@page "/consultas-contacto/{id:int}"
+@model Concesionaria.Admin.Pages.ConsultaContacto.DetalleConsultaContactoModel
+@Html.AntiForgeryToken()
+
+@{
+    ViewBag.Title = "Consultas de contacto";
+    ViewBag.SubTitle = "Detalle";
+}
+
+@section styles
+{
+    <!-- SweetAlert2 css -->
+    <link href="~/plugins/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+}
+
+<div class="container-fluid">
+
+    @await Html.PartialAsync("~/Pages/Shared/Partials/_PageTitle.cshtml")
+
+    <div class="row justify-content-center">
+        <div class="col-xxl-10">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Detalle de Consulta de Contacto</h4>
+                </div>
+                <div class="card-body">
+                    @if (Model.ConsultaContacto != null)
+                    {
+                        <dl class="row">
+                            <dt class="col-sm-3">Nombre</dt>
+                            <dd class="col-sm-9">@Model.ConsultaContacto.Nombre</dd>
+                            <dt class="col-sm-3">Apellido</dt>
+                            <dd class="col-sm-9">@Model.ConsultaContacto.Apellido</dd>
+                            <dt class="col-sm-3">E-mail</dt>
+                            <dd class="col-sm-9"><a href="mailto:@Model.ConsultaContacto.Email">@Model.ConsultaContacto.Email</a></dd>
+                            <dt class="col-sm-3">Teléfono</dt>
+                            <dd class="col-sm-9">@Model.ConsultaContacto.Telefono</dd>
+                            <dt class="col-sm-3">Fecha de Envío</dt>
+                            <dd class="col-sm-9">@Model.ConsultaContacto.FechaEnvio.ToString("g")</dd>
+                            <dt class="col-sm-3">Mensaje</dt>
+                            <dd class="col-sm-9">@Model.ConsultaContacto.Mensaje</dd>
+                            <dt class="col-sm-3">Estado</dt>
+                            <dd class="col-sm-9">@(Model.ConsultaContacto.NoLeida ? "No Leída" : "Leída")</dd>
+                        </dl>                        
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning" role="alert">
+                            <span>No se encontró la consulta de contacto.</span>
+                        </div>                        
+                    }
+                </div>
+                <div class="card-footer">
+                    <a href="/consultas-contacto" class="btn btn-secondary">
+                        <i class="ti ti-arrow-left fs-2"></i> Volver a la Lista
+                    </a>                    
+
+                    @if (Model.ConsultaContacto != null)
+                    {
+                        <button type="button" class="btn btn-danger" id="btnEliminarConsulta">
+                            <i class="ti ti-trash fs-2"></i> Eliminar Consulta
+                        </button>
+                    }
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/plugins/sweetalert2/sweetalert2.min.js"></script>
+
+    <script type="text/javascript">
+        document.getElementById('btnEliminarConsulta')?.addEventListener('click', function () {
+            Swal.fire({
+                title: '¿Está seguro?',
+                text: 'Esta acción eliminará la consulta seleccionada. ¿Desea continuar?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    eliminarConsulta();
+                }
+            });
+        });
+
+        function eliminarConsulta() {
+            const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
+            fetch(window.location.pathname + '?handler=EliminarConsulta', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': token
+                }
+            })
+            .then(async response => {
+                if (response.ok) {
+                    Swal.fire('Eliminada', 'La consulta fue eliminada correctamente.', 'success').then(() => {
+                        window.close();
+                    });
+                } else {
+                    const error = await response.text();
+                    Swal.fire('Error', 'No se pudo eliminar la consulta.', 'error');
+                }
+            })
+            .catch(error => {
+                Swal.fire('Error', 'Error de conexión.', 'error');
+            });
+        }
+    </script>
+}

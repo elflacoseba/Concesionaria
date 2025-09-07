@@ -23,7 +23,14 @@ namespace Concesionaria.Admin.Services
 
         public async Task<ConsultaContacto?> GetConsultaContactoByIdAsync(int id)
         {
-            return await _client.GetFromJsonAsync<ConsultaContacto>(_apiBaseUrl + $"ConsultasContacto/{id}");
+            var result = await _client.GetAsync(_apiBaseUrl + $"ConsultasContacto/{id}");
+
+            if (result.IsSuccessStatusCode)
+            {
+                return await result.Content.ReadFromJsonAsync<ConsultaContacto>();
+            }
+
+            return null;
         }
 
         public async Task<ConsultaContacto> CrearConsultaContactoAsync(ConsultaContactoCreacion consulta)
