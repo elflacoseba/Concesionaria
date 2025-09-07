@@ -17,55 +17,101 @@
 
     @await Html.PartialAsync("~/Pages/Shared/Partials/_PageTitle.cshtml")
 
-    <div class="row justify-content-center">
-        <div class="col-xxl-10">
-            <div class="card">
-                <div class="card-header">
-                    <h4>Detalle de Consulta de Contacto</h4>
-                </div>
-                <div class="card-body">
-                    @if (Model.ConsultaContacto != null)
-                    {
-                        <dl class="row">
-                            <dt class="col-sm-3">Nombre</dt>
-                            <dd class="col-sm-9">@Model.ConsultaContacto.Nombre</dd>
-                            <dt class="col-sm-3">Apellido</dt>
-                            <dd class="col-sm-9">@Model.ConsultaContacto.Apellido</dd>
-                            <dt class="col-sm-3">E-mail</dt>
-                            <dd class="col-sm-9"><a href="mailto:@Model.ConsultaContacto.Email">@Model.ConsultaContacto.Email</a></dd>
-                            <dt class="col-sm-3">Teléfono</dt>
-                            <dd class="col-sm-9">@Model.ConsultaContacto.Telefono</dd>
-                            <dt class="col-sm-3">Fecha de Envío</dt>
-                            <dd class="col-sm-9">@Model.ConsultaContacto.FechaEnvio.ToString("g")</dd>
-                            <dt class="col-sm-3">Mensaje</dt>
-                            <dd class="col-sm-9">@Model.ConsultaContacto.Mensaje</dd>
-                            <dt class="col-sm-3">Estado</dt>
-                            <dd class="col-sm-9">@(Model.ConsultaContacto.NoLeida ? "No Leída" : "Leída")</dd>
-                        </dl>                        
-                    }
-                    else
-                    {
-                        <div class="alert alert-warning" role="alert">
-                            <span>No se encontró la consulta de contacto.</span>
-                        </div>                        
-                    }
-                </div>
-                <div class="card-footer">
-                    <a href="/consultas-contacto" class="btn btn-secondary">
-                        <i class="ti ti-arrow-left fs-2"></i> Volver a la Lista
-                    </a>                    
+    @if (Model.ConsultaContacto != null)
+    {
+        <div class="outlook-box email-app">
+          
+        <div class="card h-100 mb-0 rounded-start-0 flex-grow-1 border-start-0">
+            <div class="card-header d-lg-none d-flex gap-2">
+                <button class="btn btn-default btn-icon" type="button" data-bs-toggle="offcanvas" data-bs-target="#emailSidebaroffcanvas" aria-controls="emailSidebaroffcanvas">
+                    <i class="ti ti-menu-2 fs-lg"></i>
+                </button>
 
-                    @if (Model.ConsultaContacto != null)
-                    {
-                        <button type="button" class="btn btn-danger" id="btnEliminarConsulta">
-                            <i class="ti ti-trash fs-2"></i> Eliminar Consulta
-                        </button>
-                    }
-                    
+                <div class="app-search">
+                    <input type="text" class="form-control" placeholder="Search mails...">
+                    <i data-lucide="search" class="app-search-icon text-muted"></i>
+                </div>
+            </div>
+
+            <div class="card-header card-bg justify-content-between">
+                <div class="d-flex flex-wrap align-items-center gap-1">
+                    <!-- Volver al listado -->
+                    <a href="/consultas-contacto" class="btn btn-default btn-icon btn-sm" data-bs-toggle="tooltip" title="Volver a listado">
+                        <i class="ti ti-arrow-left-dashed fs-lg"></i>
+                    </a>
+
+                    <!-- Delete -->
+                    <button type="button" id="btnEliminarConsulta" class="btn btn-default btn-icon btn-sm" data-bs-toggle="tooltip" title="Borrar consulta">
+                        <i class="ti ti-trash fs-lg"></i>
+                    </button>
+
+                </div>
+               
+            </div>
+
+            <div class="card-body pt-0 pb-5" style="height: calc(100% - 100px);" data-simplebar data-simplebar-md>
+                <h4 class="py-3 mb-0 sticky-top bg-body-secondary">Detalle de consulta de contacto</h4>
+                
+                <div class="py-3 border-top border-dashed">
+                    <div class="d-flex align-items-center">
+                        <div class="d-flex align-items-center flex-grow-1 text-reset">
+                            
+                            <i class="ti ti-user-circle fs-1"></i>
+
+                            <div class="ms-2 overflow-hidden">
+                                <h5 class="fs-sm mb-0 text-truncate">@Model.ConsultaContacto.Nombre @Model.ConsultaContacto.Apellido</h5>
+                                <div class="text-muted mb-0 text-truncate d-flex">
+                                    <i class="ti ti-mail fs-3 text-primary"></i><span style="padding: 2px;" >@Model.ConsultaContacto.Email | </span> <i class="ti ti-brand-whatsapp fs-3 text-success"></i><span style="padding: 2px;">@Model.ConsultaContacto.Telefono</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ms-auto d-flex align-items-center gap-1">
+                            <span class="text-muted fs-xs mb-0 ms-2">@Model.ConsultaContacto.FechaEnvio.ToString("MMM dd, HH:mm tt")</span>
+                        </div>
+                    </div>
+
+                        <div class="mt-lg-4 mt-3">
+                        <p>@Model.ConsultaContacto.Mensaje</p>
+                        </div>
+            
+                </div>
+
+            </div> <!-- end card-body -->
+
+            <div class="card-header bg-body-secondary border-top border-dashed border-bottom-0 position-absolute bottom-0 w-100">
+                <div class="d-flex flex-wrap align-items-center justify-content-between">
+                    <div class="d-flex align-items-center gap-2">
+                        <a href="mailto:@Model.ConsultaContacto.Email" class="btn btn-sm btn-default">Responder por mail</a>
+                        <a href="https://wa.me/@Model.ConsultaContacto.Telefono" class="btn btn-sm btn-default">Responder por WhatsApp</a>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end card-->
+        </div> <!-- end row-->
+    }
+    else
+    {
+        <div class="row justify-content-center">
+            <div class="col-xxl-10">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Detalle de Consulta de Contacto</h4>
+                    </div>
+                    <div class="card-body">                   
+                            <div class="alert alert-warning" role="alert">
+                                <span>No se encontró la consulta de contacto.</span>
+                            </div>                        
+                    </div>
+                    <div class="card-footer">
+                        <a href="/consultas-contacto" class="btn btn-secondary">
+                            <i class="ti ti-arrow-left fs-2"></i> Volver a la Lista
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    }
+    
 </div>
 
 @section scripts {
@@ -99,7 +145,7 @@
             .then(async response => {
                 if (response.ok) {
                     Swal.fire('Eliminada', 'La consulta fue eliminada correctamente.', 'success').then(() => {
-                        window.close();
+                        window.location = '/consultas-contacto';
                     });
                 } else {
                     const error = await response.text();
