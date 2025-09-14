@@ -12,6 +12,11 @@ namespace Concesionaria.Admin.Pages.ConsultaContacto
         [BindProperty]
         public ConsultaContactoCreacion ConsultaContacto { get; set; } = null!;
 
+        [TempData]
+        public string? SuccessMessage { get; set; }
+        [TempData]
+        public string? ErrorMessage { get; set; }
+
         public CrearConsultaContactoModel(IConsultasContactoService consultasContactoService)
         {
             _consultasContactoService = consultasContactoService;
@@ -20,6 +25,7 @@ namespace Concesionaria.Admin.Pages.ConsultaContacto
         public void OnGet()
         {
             ConsultaContacto = new ConsultaContactoCreacion();
+            ErrorMessage = null;
         }
 
         public async Task<ActionResult> OnPost()
@@ -29,15 +35,24 @@ namespace Concesionaria.Admin.Pages.ConsultaContacto
                 return Page();
             }
 
-            var result = await _consultasContactoService.CrearConsultaContactoAsync(ConsultaContacto);
-            
-            if (result == null)
+            try
+            {                
+                var result = await _consultasContactoService.CrearConsultaContactoAsync(ConsultaContacto);
+
+                if (result == null)
+                {
+                    ErrorMessage = "Ocurrió un error al crear la consulta de contacto.";
+                    return Page();
+                }
+
+                SuccessMessage = "La consulta se creó exitosamente.";
+                return RedirectToPage();
+            }
+            catch (Exception ex)
             {
-                ModelState.AddModelError(string.Empty, "Ocurrió un error al crear la consulta de contacto.");
+                ErrorMessage = "Ha ocurrido un error inesperado: " + ex.Message;
                 return Page();
             }
-
-            return RedirectToPage("/ConsultaContacto/ConsultasContacto");
         }
     }
 }

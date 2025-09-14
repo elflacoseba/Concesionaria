@@ -4,40 +4,63 @@
 @{
     ViewBag.Title = "Nueva Consulta";
     Layout = "~/Pages/Shared/_BaseLayout.cshtml";
+    var mostrarAlertaExito = !string.IsNullOrEmpty(Model.SuccessMessage);
+    var mostrarAlertaError = !string.IsNullOrEmpty(Model.ErrorMessage);
 }
 <div class="auth-box overflow-hidden align-items-center d-flex">
     <div class="container">
         <div class="row">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Form Row</h4>
+                    <h4 class="card-title">Consulta de Contacto</h4>
                 </div>
                 <div class="card-body">
-                    <form method="post">
-                        <div class="row g-2">
-                            <div class="mb-3 col-md-6">
-                                <label for="inputNombre" class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="inputNombre" asp-for="ConsultaContacto.Nombre" placeholder="Nombre">
+                    @if (mostrarAlertaError)
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            @Model.ErrorMessage
+                        </div>
+                    }
+                    @if (mostrarAlertaExito)
+                    {
+                        <div class="alert alert-success" role="alert">
+                            @Model.SuccessMessage
+                        </div>
+                    }
+                    @if (!mostrarAlertaError && !mostrarAlertaExito)
+                    {
+                        <form method="post">
+                            <div class="row g-2">
+                                <div class="mb-3 col-md-6">
+                                    <label for="txtNombre" class="form-label">Nombre</label>
+                                    <input type="text" class="form-control @(ViewData.ModelState["ConsultaContacto.Nombre"]?.Errors.Count > 0 ? "is-invalid" : (ViewData.ModelState["ConsultaContacto.Nombre"] != null ? "is-valid" : ""))" id="txtNombre" asp-for="ConsultaContacto.Nombre" placeholder="Nombre">
+                                    <span asp-validation-for="ConsultaContacto.Nombre" class="@(ViewData.ModelState["ConsultaContacto.Nombre"]?.Errors.Count > 0 ? "invalid-feedback" : (ViewData.ModelState["ConsultaContacto.Nombre"] != null ? "valid-feedback" : ""))"></span>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label for="txtApellido" class="form-label">Apellido</label>
+                                    <input type="text" class="form-control @(ViewData.ModelState["ConsultaContacto.Apellido"]?.Errors.Count > 0 ? "is-invalid" : (ViewData.ModelState["ConsultaContacto.Apellido"] != null ? "is-valid" : ""))" id="txtApellido" asp-for="ConsultaContacto.Apellido" placeholder="Apellido">
+                                    <span asp-validation-for="ConsultaContacto.Apellido" class="@(ViewData.ModelState["ConsultaContacto.Apellido"]?.Errors.Count > 0 ? "invalid-feedback" : (ViewData.ModelState["ConsultaContacto.Apellido"] != null ? "valid-feedback" : ""))"></span>
+                                </div>
                             </div>
-                            <div class="mb-3 col-md-6">
-                                <label for="inputApellido" class="form-label">Apellido</label>
-                                <input type="text" class="form-control" id="inputApellido" asp-for="ConsultaContacto.Apellido" placeholder="Apellido">
+                            <div class="mb-3">
+                                <label for="txtEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control @(ViewData.ModelState["ConsultaContacto.Email"]?.Errors.Count > 0 ? "is-invalid" : (ViewData.ModelState["ConsultaContacto.Email"] != null ? "is-valid" : ""))" id="txtEmail" asp-for="ConsultaContacto.Email" placeholder="Email">
+                                <span asp-validation-for="ConsultaContacto.Email" class="@(ViewData.ModelState["ConsultaContacto.Email"]?.Errors.Count > 0 ? "invalid-feedback" : (ViewData.ModelState["ConsultaContacto.Email"] != null ? "valid-feedback" : ""))"></span>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="inputEmail4" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="inputEmail4" asp-for="ConsultaContacto.Email" placeholder="Email">
-                        </div>
-                        <div class="mb-3">
-                            <label for="inputTelefono" class="form-label">Teléfono</label>
-                            <input type="text" class="form-control" id="inputTelefono" asp-for="ConsultaContacto.Telefono" placeholder="Teléfono">
-                        </div>
-                        <div class="mb-3">
-                            <label for="inputMensaje" class="form-label">Mensaje</label>
-                            <textarea class="form-control" id="inputMensaje" asp-for="ConsultaContacto.Mensaje" rows="3"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Enviar Consulta</button>
-                    </form>
+                            <div class="mb-3">
+                                <label for="txtTelefono" class="form-label">Teléfono</label>
+                                <input type="text" class="form-control @(ViewData.ModelState["ConsultaContacto.Telefono"]?.Errors.Count > 0 ? "is-invalid" : (ViewData.ModelState["ConsultaContacto.Telefono"] != null ? "is-valid" : ""))" id="txtTelefono" asp-for="ConsultaContacto.Telefono" placeholder="Teléfono">
+                                <small class="form-text text-muted">Ingrese el número de celular en formato internacional. Ej: +543816301088</small>
+                                <span asp-validation-for="ConsultaContacto.Telefono" class="@(ViewData.ModelState["ConsultaContacto.Telefono"]?.Errors.Count > 0 ? "invalid-feedback" : (ViewData.ModelState["ConsultaContacto.Telefono"] != null ? "valid-feedback" : ""))"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="txtMensaje" class="form-label">Mensaje</label>
+                                <textarea class="form-control @(ViewData.ModelState["ConsultaContacto.Mensaje"]?.Errors.Count > 0 ? "is-invalid" : (ViewData.ModelState["ConsultaContacto.Mensaje"] != null ? "is-valid" : ""))" id="txtMensaje" asp-for="ConsultaContacto.Mensaje" rows="3"></textarea>
+                                <span asp-validation-for="ConsultaContacto.Mensaje" class="@(ViewData.ModelState["ConsultaContacto.Mensaje"]?.Errors.Count > 0 ? "invalid-feedback" : (ViewData.ModelState["ConsultaContacto.Mensaje"] != null ? "valid-feedback" : ""))"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Enviar Consulta</button>
+                        </form>
+                    }
                 </div> <!-- end card-body -->
             </div>
         </div>
