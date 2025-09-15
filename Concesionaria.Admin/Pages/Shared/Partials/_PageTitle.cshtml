@@ -1,6 +1,7 @@
-﻿@{
+﻿
+@{
     var title = ViewBag.Title;
-    var subtitle = ViewBag.SubTitle;
+    var breadcrumbs = ViewData["Breadcrumbs"] as List<dynamic>;
 }
 
 <div class="page-title-head d-flex align-items-center">
@@ -10,11 +11,19 @@
 
     <div class="text-end">
         <ol class="breadcrumb m-0 py-0">
-            <li class="breadcrumb-item"><a href="javascript: void(0);">Inicio</a></li>            
-            @if (!string.IsNullOrEmpty(subtitle))
+            @if (breadcrumbs != null && breadcrumbs.Count > 0)
             {
-                <li class="breadcrumb-item">@title</li>
-                <li class="breadcrumb-item active"><a href="javascript: void(0);">@subtitle</a></li>
+                foreach (var crumb in breadcrumbs)
+                {
+                    if (!string.IsNullOrEmpty((string)crumb.Url))
+                    {
+                        <li class="breadcrumb-item"><a href="@crumb.Url">@crumb.Nombre</a></li>
+                    }
+                    else
+                    {
+                        <li class="breadcrumb-item active">@crumb.Nombre</li>
+                    }
+                }
             }
             else
             {

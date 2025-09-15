@@ -16,7 +16,14 @@ namespace Concesionaria.Admin.Pages.ConsultaContacto
         }
 
         public async Task<IActionResult> OnGetAsync(int id)
-        {
+        {            
+            ViewData["Breadcrumbs"] = new List<dynamic>
+            {
+                new { Nombre = "Inicio", Url = "/" },
+                new { Nombre = "Consultas de Contacto", Url = "/consultas-contacto" },
+                new { Nombre = "Detalle", Url = "" }
+            };
+
             ConsultaContacto = await _consultasContactoService.GetConsultaContactoByIdAsync(id);
 
             if (ConsultaContacto != null && ConsultaContacto.NoLeida)
