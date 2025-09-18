@@ -1,12 +1,12 @@
-﻿using Concesionaria.Admin.Models;
+﻿using Concesionaria.Admin.DTOs;
 
 namespace Concesionaria.Admin.Services.Interfaces
 {
     public interface IConsultasContactoService
     {
-        Task<IEnumerable<ConsultaContacto>?> GetConsultasContactoAsync();
-        Task<ConsultaContacto?> GetConsultaContactoByIdAsync(int id);
-        Task<ConsultaContacto> CrearConsultaContactoAsync(ConsultaContactoCreacion consulta);
+    Task<IEnumerable<ConsultaContactoDto>?> GetConsultasContactoAsync();
+    Task<ConsultaContactoDto?> GetConsultaContactoByIdAsync(int id);
+    Task<ConsultaContactoDto> CrearConsultaContactoAsync(ConsultaContactoCreacionDto consulta);
         Task<bool> MarcarConsultaContactoLeidaByIdAsync(int id, bool leida);
         Task<bool> EliminarConsultaContactoByIdAsync(int id);
     }

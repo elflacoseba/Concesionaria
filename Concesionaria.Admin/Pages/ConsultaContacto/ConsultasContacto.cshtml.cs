@@ -8,7 +8,7 @@ namespace Concesionaria.Admin.Pages.ConsultaContacto
     public class ConsultasContactoModel : PageModel
     {
         private readonly IConsultasContactoService _consultasContactoService;
-        public IEnumerable<Models.ConsultaContacto>? ConsultasContacto { get; set; }
+        public IEnumerable<DTOs.ConsultaContactoDto>? ConsultasContacto { get; set; }
 
         public ConsultasContactoModel(IConsultasContactoService consultasContactoService)
         {

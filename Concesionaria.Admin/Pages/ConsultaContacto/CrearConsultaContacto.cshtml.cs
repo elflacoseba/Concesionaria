@@ -1,4 +1,4 @@
-using Concesionaria.Admin.Models;
+using Concesionaria.Admin.DTOs;
 using Concesionaria.Admin.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,7 +10,7 @@ namespace Concesionaria.Admin.Pages.ConsultaContacto
         private readonly IConsultasContactoService _consultasContactoService;
 
         [BindProperty]
-        public ConsultaContactoCreacion ConsultaContacto { get; set; } = null!;
+    public ConsultaContactoCreacionDto ConsultaContacto { get; set; } = null!;
 
         [TempData]
         public string? SuccessMessage { get; set; }
@@ -24,7 +24,7 @@ namespace Concesionaria.Admin.Pages.ConsultaContacto
 
         public void OnGet()
         {
-            ConsultaContacto = new ConsultaContactoCreacion();
+            ConsultaContacto = new ConsultaContactoCreacionDto();
             ErrorMessage = null;
         }
 

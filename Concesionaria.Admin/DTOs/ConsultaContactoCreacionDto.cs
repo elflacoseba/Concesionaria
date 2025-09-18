@@ -1,8 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
-namespace Concesionaria.Admin.Models
+namespace Concesionaria.Admin.DTOs
 {
-    public class ConsultaContactoCreacion
+    public class ConsultaContactoCreacionDto
     {
         [Required(ErrorMessage = "El nombre es requerido")]
         [StringLength(100, ErrorMessage = "Máximo 100 caracteres")]

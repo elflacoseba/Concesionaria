@@ -1,4 +1,4 @@
-using Concesionaria.Admin.Models;
+using Concesionaria.Admin.DTOs;
 using Concesionaria.Admin.Services.Interfaces;
 
 namespace Concesionaria.Admin.Services
@@ -16,30 +16,30 @@ namespace Concesionaria.Admin.Services
             _client = _httpClientFactory.CreateClient("ConsultasContactoApi");
         }
 
-        public async Task<IEnumerable<ConsultaContacto>?> GetConsultasContactoAsync()
+        public async Task<IEnumerable<ConsultaContactoDto>?> GetConsultasContactoAsync()
         {
-            return await _client.GetFromJsonAsync<IEnumerable<ConsultaContacto>>(_apiBaseUrl + "ConsultasContacto");
+            return await _client.GetFromJsonAsync<IEnumerable<ConsultaContactoDto>>(_apiBaseUrl + "ConsultasContacto");
         }
 
-        public async Task<ConsultaContacto?> GetConsultaContactoByIdAsync(int id)
+        public async Task<ConsultaContactoDto?> GetConsultaContactoByIdAsync(int id)
         {
             var result = await _client.GetAsync(_apiBaseUrl + $"ConsultasContacto/{id}");
 
             if (result.IsSuccessStatusCode)
             {
-                return await result.Content.ReadFromJsonAsync<ConsultaContacto>();
+                return await result.Content.ReadFromJsonAsync<ConsultaContactoDto>();
             }
 
             return null;
         }
 
-        public async Task<ConsultaContacto> CrearConsultaContactoAsync(ConsultaContactoCreacion consulta)
+        public async Task<ConsultaContactoDto> CrearConsultaContactoAsync(ConsultaContactoCreacionDto consulta)
         {
             var response = await _client.PostAsJsonAsync(_apiBaseUrl + "ConsultasContacto", consulta);
 
             if (response.IsSuccessStatusCode)
             {
-                var consultaCreada = await response.Content.ReadFromJsonAsync<ConsultaContacto>();
+                var consultaCreada = await response.Content.ReadFromJsonAsync<ConsultaContactoDto>();
                 
                 if (consultaCreada is not null)
                 {
