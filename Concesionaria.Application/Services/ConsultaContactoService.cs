@@ -22,7 +22,7 @@ namespace Concesionaria.Application.Services
         public async Task<IEnumerable<ConsultaContactoDTO>> GetAllConsultasContactoAsync()
         {
             var consultas = await _repository.GetAllAsync();
-            return consultas.Adapt<IEnumerable<ConsultaContactoDTO>>();
+                return consultas.Adapt<IEnumerable<ConsultaContactoDTO>>();
         }
 
         public async Task<PagedResultDTO<ConsultaContactoDTO>> GetConsultasContactoPagedAsync(int pageNumber, int pageSize)

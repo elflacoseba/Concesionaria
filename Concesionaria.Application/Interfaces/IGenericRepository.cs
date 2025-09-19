@@ -12,5 +12,6 @@ namespace Concesionaria.Application.Interfaces
         Task<int> SaveChangesAsync();
         Task<(IEnumerable<T> Items, int TotalCount)> GetPagedAsync(int pageNumber, int pageSize);
         Task<IEnumerable<T>> GetByPredicateAsync(Expression<Func<T, bool>> predicate);
+        Task<IEnumerable<TResult>> GetSelectedAsync<TResult>(Expression<Func<T, TResult>> selector);
     }
 }
