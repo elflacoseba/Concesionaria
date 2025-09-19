@@ -1,4 +1,14 @@
-﻿<!DOCTYPE html>
+﻿@using Concesionaria.Admin.Helpers
+@inject IHttpClientFactory HttpClientFactory
+@inject IConfiguration Configuration
+
+@{
+    var httpClient = HttpClientFactory.CreateClient();
+    var apiBaseUrl = Configuration["API_URL_BASE"];
+    var consultasNoLeidas = await ConsultaContactoHelper.ObtenerCantidadNoLeidasAsync(httpClient, apiBaseUrl!);
+}
+
+<!DOCTYPE html>
 
 @{
     var html_attributes = ViewBag.HTMLAttributes != null ? ViewBag.HTMLAttributes : "";
@@ -18,8 +28,7 @@
 
 
         @await Html.PartialAsync("~/Pages/Shared/Partials/_TopBar.cshtml")
-        @await Html.PartialAsync("~/Pages/Shared/Partials/_SideNav.cshtml")
-
+        @await Html.PartialAsync("~/Pages/Shared/Partials/_SideNav.cshtml", consultasNoLeidas)
 
         <div class="content-page">
             

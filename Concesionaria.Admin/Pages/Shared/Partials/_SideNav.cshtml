@@ -1,4 +1,6 @@
-﻿<!-- Sidenav Menu Start -->
+﻿@model int
+
+<!-- Sidenav Menu Start -->
 <div class="sidenav-menu">
 
     <!-- Brand Logo -->
@@ -91,6 +93,10 @@
                 <a href="consultas-contacto" target="_self" class="side-nav-link">
                     <span class="menu-icon"><i class="ti ti-message-2"></i></span>
                     <span class="menu-text">Consultas</span>
+                    @if (Model > 0)
+                    {
+                        <span class="badge bg-danger">@Model</span>
+                    }
                 </a>
             </li>
 
