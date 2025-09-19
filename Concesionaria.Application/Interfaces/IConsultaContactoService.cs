@@ -1,11 +1,10 @@
 ﻿using Concesionaria.Application.DTOs;
-using System.Threading.Tasks;
 
 namespace Concesionaria.Application.Interfaces
 {
     public interface IConsultaContactoService
     {
-        Task<IEnumerable<ConsultaContactoDTO>> GetAllConsultasContactoAsync();
+        Task<IEnumerable<ConsultaContactoSinMensajeDTO>> GetAllConsultasContactoAsync();
         Task<PagedResultDTO<ConsultaContactoDTO>> GetConsultasContactoPagedAsync(int pageNumber, int pageSize);
         Task<ConsultaContactoDTO> GetConsultaContactoByIdAsync(int id);
         Task<ConsultaContactoDTO> CreateConsultaContactoAsync(ConsultaContactoCreacionDTO consultaContactoCreacionDTO);

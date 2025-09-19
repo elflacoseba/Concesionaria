@@ -19,10 +19,10 @@ namespace Concesionaria.Application.Services
             _validatorConsultaActualizacionDTO = validatorConsultaActualizacionDTO;
         }
 
-        public async Task<IEnumerable<ConsultaContactoDTO>> GetAllConsultasContactoAsync()
+        public async Task<IEnumerable<ConsultaContactoSinMensajeDTO>> GetAllConsultasContactoAsync()
         {
-            var consultas = await _repository.GetAllAsync();
-                return consultas.Adapt<IEnumerable<ConsultaContactoDTO>>();
+            var consultas = await _repository.GetSelectedAsync(c => new { c.Id, c.Nombre, c.Apellido, c.Email, c.Telefono, c.FechaEnvio, c.FechaLectura, c.NoLeida });
+            return consultas.Adapt<IEnumerable<ConsultaContactoSinMensajeDTO>>();
         }
 
         public async Task<PagedResultDTO<ConsultaContactoDTO>> GetConsultasContactoPagedAsync(int pageNumber, int pageSize)

@@ -18,8 +18,8 @@ namespace Concesionaria.API.Controllers
 
         [HttpGet]
         [EndpointSummary("Obtiene todas las consultas de contacto.")]
-        [ProducesResponseType<IEnumerable<ConsultaContactoDTO>>(StatusCodes.Status200OK)]
-        public async Task<IEnumerable<ConsultaContactoDTO>> Get()
+        [ProducesResponseType<IEnumerable<ConsultaContactoSinMensajeDTO>>(StatusCodes.Status200OK)]
+        public async Task<IEnumerable<ConsultaContactoSinMensajeDTO>> Get()
         {
             return await _consultaContactoService.GetAllConsultasContactoAsync();
         }
