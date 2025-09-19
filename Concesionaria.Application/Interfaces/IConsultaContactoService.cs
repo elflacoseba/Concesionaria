@@ -11,6 +11,6 @@ namespace Concesionaria.Application.Interfaces
         Task<int> UpdateConsultaContactoAsync(int id, ConsultaContactoActualizacionDTO consultaContactoActualizacionDTO);
         Task<int> MarcarConsultaComoLeidaAsync(int id, bool leida);
         Task<int> DeleteConsultaContactoAsync(int id);
-        Task<IEnumerable<ConsultaContactoDTO>> GetConsultasPorEstadoNoLeidaAsync(bool noLeida);
+        Task<IEnumerable<ConsultaContactoSinMensajeDTO>> GetConsultasPorEstadoNoLeidaAsync(bool noLeida);
     }
 }

@@ -120,10 +120,11 @@ namespace Concesionaria.Application.Services
             return await _repository.SaveChangesAsync();
         }        
 
-        public async Task<IEnumerable<ConsultaContactoDTO>> GetConsultasPorEstadoNoLeidaAsync(bool noLeida)
+        public async Task<IEnumerable<ConsultaContactoSinMensajeDTO>> GetConsultasPorEstadoNoLeidaAsync(bool noLeida)
         {
-            var consultas = await _repository.GetByPredicateAsync(c => c.NoLeida == noLeida);
-            return consultas.Adapt<IEnumerable<ConsultaContactoDTO>>();
+            var consultasNoLeidas = await _repository.GetByPredicateAsync(c => c.NoLeida == noLeida);
+            var consultas = consultasNoLeidas.Select(c => new { c.Id, c.Nombre, c.Apellido, c.Email, c.Telefono, c.FechaEnvio, c.FechaLectura, c.NoLeida });
+            return consultas.Adapt<IEnumerable<ConsultaContactoSinMensajeDTO>>();
         }
     }
 }
