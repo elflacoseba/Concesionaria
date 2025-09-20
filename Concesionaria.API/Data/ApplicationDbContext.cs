@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-namespace Concesionaria.API.Infrastructure.Persistence.Context
+namespace Concesionaria.API.Data
 {
     public class ApplicationDbContext : DbContext
     {

@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Concesionaria.API.Infrastructure.Migrations
+namespace Concesionaria.API.Data.Migrations
 {
     /// <inheritdoc />
     public partial class AgregoColumnaFechaLectura_ConsultaContacto : Migration

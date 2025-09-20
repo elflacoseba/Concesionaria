@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace Concesionaria.API.Infrastructure.Repositories
+namespace Concesionaria.API.Data.Repositories
 {
     /// <summary>
     /// Repositorio genérico para operaciones CRUD y consultas sobre entidades de tipo <typeparamref name="T"/>.

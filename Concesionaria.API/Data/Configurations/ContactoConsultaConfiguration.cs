@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Concesionaria.API.Infrastructure.Persistence.Configurations
+namespace Concesionaria.API.Data.Configurations
 {
     public class ContactoConsultaConfiguration : IEntityTypeConfiguration<ConsultaContacto>
     {

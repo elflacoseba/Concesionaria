@@ -1,8 +1,8 @@
 using Concesionaria.API.Application.Interfaces;
 using Concesionaria.API.Application.Mappers;
 using Concesionaria.API.Application.Services;
-using Concesionaria.API.Infrastructure.Persistence.Context;
-using Concesionaria.API.Infrastructure.Repositories;
+using Concesionaria.API.Data;
+using Concesionaria.API.Data.Repositories;
 using Concesionaria.API.Middlewares;
 using FluentValidation;
 using Mapster;

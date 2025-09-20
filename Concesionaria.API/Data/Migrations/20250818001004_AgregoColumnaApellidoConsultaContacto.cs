@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Concesionaria.API.Infrastructure.Migrations
+namespace Concesionaria.API.Data.Migrations
 {
     /// <inheritdoc />
     public partial class AgregoColumnaApellidoConsultaContacto : Migration
