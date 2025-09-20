@@ -1,6 +1,6 @@
 using Concesionaria.API.Middlewares;
-using Concesionaria.Application.Extensions;
-using Concesionaria.Infrastructure.Extensions;
+using Concesionaria.API.Application.Extensions;
+using Concesionaria.API.Infrastructure.Extensions;
 
 namespace Concesionaria.API
 {
