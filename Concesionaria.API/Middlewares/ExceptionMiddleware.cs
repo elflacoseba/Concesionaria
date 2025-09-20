@@ -1,4 +1,4 @@
-using Concesionaria.Application.Exceptions;
+using Concesionaria.API.Exceptions;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
