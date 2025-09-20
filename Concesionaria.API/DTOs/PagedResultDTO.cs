@@ -1,4 +1,4 @@
-namespace Concesionaria.API.Application.DTOs
+namespace Concesionaria.API.DTOs
 {
     public class PagedResultDTO<T>
     {

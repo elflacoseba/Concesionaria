@@ -1,7 +1,7 @@
-using Concesionaria.API.Application.Commons;
+using Concesionaria.API.Commons;
 using FluentValidation.Results;
 
-namespace Concesionaria.API.Application.Exceptions
+namespace Concesionaria.API.Exceptions
 {
     public class CustomValidationException : Exception
     {

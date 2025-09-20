@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Concesionaria.API.Application.Interfaces
+namespace Concesionaria.API.Interfaces
 {
     public interface IGenericRepository<T> where T : class
     {

@@ -1,10 +1,10 @@
-﻿using Concesionaria.API.Application.DTOs;
-using Concesionaria.API.Application.Interfaces;
+﻿using Concesionaria.API.DTOs;
+using Concesionaria.API.Interfaces;
 using Concesionaria.API.Models;
 using FluentValidation;
 using Mapster;
 
-namespace Concesionaria.API.Application.Services
+namespace Concesionaria.API.Services
 {
     public class ConsultaContactoService : IConsultaContactoService
     {

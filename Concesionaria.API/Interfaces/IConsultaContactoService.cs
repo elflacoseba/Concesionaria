@@ -1,6 +1,6 @@
-﻿using Concesionaria.API.Application.DTOs;
+﻿using Concesionaria.API.DTOs;
 
-namespace Concesionaria.API.Application.Interfaces
+namespace Concesionaria.API.Interfaces
 {
     public interface IConsultaContactoService
     {

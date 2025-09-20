@@ -1,8 +1,8 @@
 ﻿using Mapster;
-using Concesionaria.API.Application.DTOs;
 using Concesionaria.API.Models;
+using Concesionaria.API.DTOs;
 
-namespace Concesionaria.API.Application.Mappers
+namespace Concesionaria.API.Mappers
 {
     public static class ConsultaContactoMappingConfig
     {

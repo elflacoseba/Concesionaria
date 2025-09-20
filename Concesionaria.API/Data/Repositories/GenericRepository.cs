@@ -1,4 +1,4 @@
-﻿using Concesionaria.API.Application.Interfaces;
+﻿using Concesionaria.API.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 

@@ -1,5 +1,5 @@
-﻿using Concesionaria.API.Application.DTOs;
-using Concesionaria.API.Application.Interfaces;
+﻿using Concesionaria.API.DTOs;
+using Concesionaria.API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
 

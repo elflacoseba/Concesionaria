@@ -1,4 +1,4 @@
-﻿namespace Concesionaria.API.Application.Commons
+﻿namespace Concesionaria.API.Commons
 {
     public class ErrorValidation
     {

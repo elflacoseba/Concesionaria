@@ -1,9 +1,9 @@
-using Concesionaria.API.Application.Interfaces;
-using Concesionaria.API.Application.Mappers;
-using Concesionaria.API.Application.Services;
 using Concesionaria.API.Data;
 using Concesionaria.API.Data.Repositories;
+using Concesionaria.API.Interfaces;
+using Concesionaria.API.Mappers;
 using Concesionaria.API.Middlewares;
+using Concesionaria.API.Services;
 using FluentValidation;
 using Mapster;
 using Microsoft.EntityFrameworkCore;

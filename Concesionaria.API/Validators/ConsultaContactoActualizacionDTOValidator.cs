@@ -1,7 +1,7 @@
-﻿using Concesionaria.API.Application.DTOs;
+﻿using Concesionaria.API.DTOs;
 using FluentValidation;
 
-namespace Concesionaria.API.Application.Validators
+namespace Concesionaria.API.Validators
 {
     public class ConsultaContactoActualizacionDTOValidator : AbstractValidator<ConsultaContactoActualizacionDTO>
     {
