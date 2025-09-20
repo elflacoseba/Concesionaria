@@ -1,4 +1,4 @@
-namespace Concesionaria.API.Domain.Entities
+namespace Concesionaria.API.Models
 {
     public class ConsultaContacto
     {

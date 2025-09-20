@@ -1,6 +1,6 @@
 ﻿using Mapster;
 using Concesionaria.API.Application.DTOs;
-using Concesionaria.API.Domain.Entities;
+using Concesionaria.API.Models;
 
 namespace Concesionaria.API.Application.Mappers
 {

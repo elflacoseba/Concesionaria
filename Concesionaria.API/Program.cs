@@ -1,6 +1,13 @@
+using Concesionaria.API.Application.Interfaces;
+using Concesionaria.API.Application.Mappers;
+using Concesionaria.API.Application.Services;
+using Concesionaria.API.Infrastructure.Persistence.Context;
+using Concesionaria.API.Infrastructure.Repositories;
 using Concesionaria.API.Middlewares;
-using Concesionaria.API.Application.Extensions;
-using Concesionaria.API.Infrastructure.Extensions;
+using FluentValidation;
+using Mapster;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace Concesionaria.API
 {
@@ -12,8 +19,16 @@ namespace Concesionaria.API
             var configuration = builder.Configuration;
 
             // Add services to the container.
-            builder.Services.AddApplicationLayer();
-            builder.Services.AddInfrastructureLayer(configuration);
+            // Registrar Mapster
+            builder.Services.AddMapster();
+            ConsultaContactoMappingConfig.RegisterMappings();
+
+            builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            builder.Services.AddScoped<IConsultaContactoService, ConsultaContactoService>();
+            builder.Services.AddDbContext<ApplicationDbContext>(
+                options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnectionDB")));
+            builder.Services.AddScoped<DbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
+            builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

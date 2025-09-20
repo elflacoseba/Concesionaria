@@ -1,4 +1,4 @@
-﻿using Concesionaria.API.Domain.Entities;
+﻿using Concesionaria.API.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
