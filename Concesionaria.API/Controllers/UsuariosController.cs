@@ -1,6 +1,7 @@
 using Concesionaria.API.DTOs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel;
 
 namespace Concesionaria.API.Controllers
 {
@@ -9,12 +10,10 @@ namespace Concesionaria.API.Controllers
     public class UsuariosController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UsuariosController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        public UsuariosController(UserManager<IdentityUser> userManager)
         {
             _userManager = userManager;
-            _roleManager = roleManager;
         }
 
         [HttpGet]
@@ -22,7 +21,7 @@ namespace Concesionaria.API.Controllers
         [ProducesResponseType<IEnumerable<IdentityUser>>(StatusCodes.Status200OK)]
         public IActionResult GetUsuarios()
         {
-            var users = _userManager.Users.ToList();            
+            var users = _userManager.Users.ToList();
             return Ok(users);
         }
 
@@ -30,7 +29,7 @@ namespace Concesionaria.API.Controllers
         [EndpointSummary("Obtiene un usuario por su ID.")]
         [ProducesResponseType<IdentityUser>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetUsuario(string id)
+        public async Task<IActionResult> GetUsuario([Description("Id del usuario")] string id)
         {
             var user = await _userManager.FindByIdAsync(id);
             if (user == null)
@@ -59,7 +58,7 @@ namespace Concesionaria.API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> EliminarUsuario(string id)
+        public async Task<IActionResult> EliminarUsuario([Description("Id del usuario")] string id)
         {
             var user = await _userManager.FindByIdAsync(id);
             if (user == null)
@@ -70,12 +69,12 @@ namespace Concesionaria.API.Controllers
             return BadRequest(result.Errors);
         }
 
-        [HttpPost("{id}/roles")]
+        [HttpPost("{id}/AsignarRoles")]
         [EndpointSummary("Asigna roles a un usuario.")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AsignarRoles(string id, [FromBody] List<string> roles)
+        public async Task<IActionResult> AsignarRoles([Description("Id del usuario")] string id, [FromBody] List<string> roles)
         {
             var user = await _userManager.FindByIdAsync(id);
             if (user == null)
@@ -86,11 +85,27 @@ namespace Concesionaria.API.Controllers
             return BadRequest(result.Errors);
         }
 
+        [HttpPost("{id}/QuitarRoles")]
+        [EndpointSummary("Quita roles a un usuario.")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> RemoverRoles([Description("Id del usuario")] string id, [FromBody] List<string> roles)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+                return NotFound();
+            var result = await _userManager.RemoveFromRolesAsync(user, roles);
+            if (result.Succeeded)
+                return Ok();
+            return BadRequest(result.Errors);
+        }
+
         [HttpGet("{id}/roles")]
         [EndpointSummary("Obtiene los roles de un usuario.")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> ObtenerRoles(string id)
+        public async Task<IActionResult> ObtenerRoles([Description("Id del usuario")] string id)
         {
             var user = await _userManager.FindByIdAsync(id);
             if (user == null)
@@ -100,5 +115,5 @@ namespace Concesionaria.API.Controllers
         }
     }
 
-    
+
 }

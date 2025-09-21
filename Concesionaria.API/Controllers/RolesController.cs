@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel;
 
 namespace Concesionaria.API.Controllers
 {
@@ -27,7 +28,7 @@ namespace Concesionaria.API.Controllers
         [EndpointSummary("Crea un nuevo rol.")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateRole([FromBody] string roleName)
+        public async Task<IActionResult> CreateRole([FromBody][Description("Nombre del rol")] string roleName)
         {
             if (string.IsNullOrWhiteSpace(roleName))
                 return BadRequest("El nombre del rol es requerido.");
@@ -43,7 +44,7 @@ namespace Concesionaria.API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> DeleteRole(string roleName)
+        public async Task<IActionResult> DeleteRole([Description("Nombre del rol")] string roleName)
         {
             var role = await _roleManager.FindByNameAsync(roleName);
             if (role == null)

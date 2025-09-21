@@ -18,23 +18,25 @@ namespace Concesionaria.API
             builder.Services.AddApplicationLayer();
             builder.Services.AddInfrastructureLayer(configuration);
 
-            // Add Identity with its own context
+            // Add IdentityCore with its own context
             builder.Services.AddDbContext<ApiIdentityDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnectionDB")));
 
-            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApiIdentityDbContext>()
-                .AddDefaultTokenProviders();
-
-            builder.Services.Configure<IdentityOptions>(options =>
-            {                
+            builder.Services.AddIdentityCore<IdentityUser>(options =>
+            {
                 options.User.RequireUniqueEmail = true;
                 options.Password.RequireDigit = true;
                 options.Password.RequireLowercase = true;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequiredLength = 6;
-            });
+            })
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<ApiIdentityDbContext>()
+                .AddDefaultTokenProviders();
+
+            builder.Services.AddScoped<UserManager<IdentityUser>>();
+            //builder.Services.AddScoped<RoleManager<IdentityRole>>();
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -50,10 +52,12 @@ namespace Concesionaria.API
                     {
                         Name = "Sebastián Enrique Serrisuela",
                         Email = "sebaserri@gmail.com",
-                        Url = new Uri("https://elflacoseba.dev"),                        
+                        Url = new Uri("https://elflacoseba.dev"),
                     }
                 });
             });
+
+            builder.Services.AddDataProtection();
 
             var app = builder.Build();
 
