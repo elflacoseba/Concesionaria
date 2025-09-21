@@ -1,6 +1,9 @@
 using Concesionaria.API.Middlewares;
 using Concesionaria.Application.Extensions;
 using Concesionaria.Infrastructure.Extensions;
+using Microsoft.AspNetCore.Identity;
+using Concesionaria.API.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Concesionaria.API
 {
@@ -14,6 +17,24 @@ namespace Concesionaria.API
             // Add services to the container.
             builder.Services.AddApplicationLayer();
             builder.Services.AddInfrastructureLayer(configuration);
+
+            // Add Identity with its own context
+            builder.Services.AddDbContext<ApiIdentityDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnectionDB")));
+
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApiIdentityDbContext>()
+                .AddDefaultTokenProviders();
+
+            builder.Services.Configure<IdentityOptions>(options =>
+            {                
+                options.User.RequireUniqueEmail = true;
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 6;
+            });
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -47,6 +68,7 @@ namespace Concesionaria.API
 
             app.UseExceptionMiddleware();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();
