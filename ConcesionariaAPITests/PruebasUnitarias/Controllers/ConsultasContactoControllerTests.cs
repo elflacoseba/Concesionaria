@@ -56,10 +56,10 @@ namespace Concesionaria.API.Tests.Controllers
                 FechaEnvio = DateTime.Now,
                 NoLeida = true
             };
-            _serviceMock.Setup(s => s.GetConsultaContactoByIdAsync(1)).ReturnsAsync(consulta);
+            _serviceMock!.Setup(s => s.GetConsultaContactoByIdAsync(1)).ReturnsAsync(consulta);
 
             // Act
-            var result = await _controller.Get(1);
+            var result = await _controller!.Get(1);
 
             // Assert
             Assert.AreEqual(consulta, result.Value);
@@ -69,10 +69,10 @@ namespace Concesionaria.API.Tests.Controllers
         public async Task Get_ReturnsNotFound_WhenNotFound()
         {
             // Arrange
-            _serviceMock.Setup(s => s.GetConsultaContactoByIdAsync(1)).ReturnsAsync((ConsultaContactoDTO)null);
+            _serviceMock.Setup(s => s.GetConsultaContactoByIdAsync(1)).ReturnsAsync((ConsultaContactoDTO)null!);
 
             // Act
-            var result = await _controller.Get(1);
+            var result = await _controller!.Get(1);
 
             // Assert
             Assert.IsInstanceOfType(result.Result, typeof(NotFoundResult));
@@ -82,7 +82,7 @@ namespace Concesionaria.API.Tests.Controllers
         public async Task Post_ReturnsBadRequest_WhenDtoIsNull()
         {
             // Act
-            var result = await _controller.Post(null);
+            var result = await _controller!.Post(null!);
 
             // Assert
             var badRequest = result as BadRequestObjectResult;
@@ -116,7 +116,7 @@ namespace Concesionaria.API.Tests.Controllers
             _serviceMock.Setup(s => s.CreateConsultaContactoAsync(creacionDto)).ReturnsAsync(consulta);
 
             // Act
-            var result = await _controller.Post(creacionDto);
+            var result = await _controller!.Post(creacionDto);
 
             // Assert
             var createdResult = result as CreatedAtRouteResult;
@@ -129,10 +129,10 @@ namespace Concesionaria.API.Tests.Controllers
         public async Task Put_ReturnsNotFound_WhenConsultaNotFound()
         {
             // Arrange
-            _serviceMock.Setup(s => s.GetConsultaContactoByIdAsync(1)).ReturnsAsync((ConsultaContactoDTO)null);
+            _serviceMock!.Setup(s => s.GetConsultaContactoByIdAsync(1)).ReturnsAsync((ConsultaContactoDTO)null!);
 
             // Act
-            var result = await _controller.Put(1, new ConsultaContactoActualizacionDTO());
+            var result = await _controller!.Put(1, new ConsultaContactoActualizacionDTO());
 
             // Assert
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
@@ -153,11 +153,11 @@ namespace Concesionaria.API.Tests.Controllers
                 FechaEnvio = DateTime.Now,
                 NoLeida = true
             };
-            _serviceMock.Setup(s => s.GetConsultaContactoByIdAsync(1)).ReturnsAsync(consulta);
-            _serviceMock.Setup(s => s.UpdateConsultaContactoAsync(1, It.IsAny<ConsultaContactoActualizacionDTO>())).ReturnsAsync(1);
+            _serviceMock!.Setup(s => s.GetConsultaContactoByIdAsync(1)).ReturnsAsync(consulta);
+            _serviceMock!.Setup(s => s.UpdateConsultaContactoAsync(1, It.IsAny<ConsultaContactoActualizacionDTO>())).ReturnsAsync(1);
 
             // Act
-            var result = await _controller.Put(1, new ConsultaContactoActualizacionDTO());
+            var result = await _controller!.Put(1, new ConsultaContactoActualizacionDTO());
 
             // Assert
             Assert.IsInstanceOfType(result, typeof(NoContentResult));
@@ -167,7 +167,7 @@ namespace Concesionaria.API.Tests.Controllers
         public async Task Delete_ReturnsNotFound_WhenConsultaNotFound()
         {
             // Arrange
-            _serviceMock.Setup(s => s.GetConsultaContactoByIdAsync(1)).ReturnsAsync((ConsultaContactoDTO)null);
+            _serviceMock!.Setup(s => s.GetConsultaContactoByIdAsync(1)).ReturnsAsync((ConsultaContactoDTO)null!);
 
             // Act
             var result = await _controller.Delete(1);
@@ -191,8 +191,8 @@ namespace Concesionaria.API.Tests.Controllers
                 FechaEnvio = DateTime.Now,
                 NoLeida = true
             };
-            _serviceMock.Setup(s => s.GetConsultaContactoByIdAsync(1)).ReturnsAsync(consulta);
-            _serviceMock.Setup(s => s.DeleteConsultaContactoAsync(1)).ReturnsAsync(1);
+            _serviceMock!.Setup(s => s.GetConsultaContactoByIdAsync(1)).ReturnsAsync(consulta);
+            _serviceMock!.Setup(s => s.DeleteConsultaContactoAsync(1)).ReturnsAsync(1);
 
             // Act
             var result = await _controller.Delete(1);
@@ -241,33 +241,32 @@ namespace Concesionaria.API.Tests.Controllers
         public async Task FiltrarPorNoLeida_ReturnsOkResult_WithFilteredConsultas()
         {
             // Arrange
-            var consultas = new List<ConsultaContactoDTO>
+            var consultas = new List<ConsultaContactoSinMensajeDTO>
             {
-                new ConsultaContactoDTO
+                new ConsultaContactoSinMensajeDTO
                 {
                     Id = 1,
                     Nombre = "Juan",
                     Apellido = "Pérez",
                     Email = "juan@mail.com",
-                    Telefono = "123456",
-                    Mensaje = "Consulta 1",
+                    Telefono = "123456",                    
                     FechaEnvio = DateTime.Now,
                     NoLeida = true
                 },
-                new ConsultaContactoDTO
+                new ConsultaContactoSinMensajeDTO
                 {
                     Id = 2,
                     Nombre = "Ana",
                     Apellido = "García",
                     Email = "ana@mail.com",
-                    Telefono = "654321",
-                    Mensaje = "Consulta 2",
+                    Telefono = "654321",                    
                     FechaEnvio = DateTime.Now,
                     NoLeida = true
                 }
             };
+            
             _serviceMock!.Setup(s => s.GetConsultasPorEstadoNoLeidaAsync(true)).ReturnsAsync(consultas);
-
+           
             // Act
             var result = await _controller!.FiltrarPorNoLeida(true);
 
