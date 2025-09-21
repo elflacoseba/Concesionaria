@@ -6,6 +6,7 @@ using Concesionaria.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Concesionaria.API.Data.Entities;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 namespace Concesionaria.API
 {
@@ -75,6 +76,33 @@ namespace Concesionaria.API
                         Url = new Uri("https://elflacoseba.dev"),
                     }
                 });
+
+                opciones.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    In = ParameterLocation.Header,
+                    Description = "Por favor ingrese el token JWT",
+                    Scheme = "bearer",
+                    BearerFormat = "JWT"
+
+                });
+
+                opciones.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] {}
+                    }
+                });
+
             });
 
             builder.Services.AddDataProtection();
