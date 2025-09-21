@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Concesionaria.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Concesionaria.API.Data.Entities;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Concesionaria.API
 {
@@ -38,6 +39,24 @@ namespace Concesionaria.API
 
             builder.Services.AddScoped<UserManager<ApplicationUser>>();
             builder.Services.AddScoped<RoleManager<IdentityRole>>();
+            
+            builder.Services.AddHttpContextAccessor();
+
+            builder.Services.AddAuthentication().AddJwtBearer(options =>
+            {
+                options.MapInboundClaims = false;
+                
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(configuration["JwtKey"]!)),
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

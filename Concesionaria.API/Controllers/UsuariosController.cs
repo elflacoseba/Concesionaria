@@ -1,20 +1,28 @@
 using Concesionaria.API.Data.Entities;
 using Concesionaria.API.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System.ComponentModel;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace Concesionaria.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsuariosController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IConfiguration _configuration;
 
-        public UsuariosController(UserManager<ApplicationUser> userManager)
+        public UsuariosController(UserManager<ApplicationUser> userManager, IConfiguration configuration)
         {
             _userManager = userManager;
+            _configuration = configuration;
         }
 
         [HttpGet]
@@ -114,7 +122,63 @@ namespace Concesionaria.API.Controllers
             var roles = await _userManager.GetRolesAsync(user);
             return Ok(roles);
         }
+
+        [HttpPost("Login")]
+        [EndpointDescription("Autentica a un usuario y genera un token JWT.")]
+        [ProducesResponseType(typeof(RespuestaAutenticacionDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [AllowAnonymous]
+        public async Task<ActionResult<RespuestaAutenticacionDto>> Login(CredencialesUsuarioDto credenciales)
+        {
+            var user = await _userManager.FindByEmailAsync(credenciales.Email);
+            
+            if (user != null && await _userManager.CheckPasswordAsync(user, credenciales.Password))
+            {
+                return await ConstruirToken(credenciales);
+            }
+
+            ModelState.AddModelError(string.Empty, "Credenciales incorrectas.");
+            return ValidationProblem();
+        }
+
+        /// <summary>
+        /// Construye un token JWT para el usuario especificado en las credenciales.
+        /// Incluye los claims del usuario y establece la expiración del token.
+        /// </summary>
+        /// <param name="credenciales">Credenciales del usuario (email y contraseña).</param>
+        /// <returns>Un objeto <see cref="RespuestaAutenticacionDto"/> con el token generado y su fecha de expiración.</returns>
+        private async Task<RespuestaAutenticacionDto> ConstruirToken(CredencialesUsuarioDto credenciales)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim("email", credenciales.Email)
+            };
+
+            var user = await _userManager.FindByEmailAsync(credenciales.Email);
+            var claimsDB = await _userManager.GetClaimsAsync(user!);
+
+            claims.AddRange(claimsDB);
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtKey"]!));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var expiration = DateTime.UtcNow.AddHours(8);
+
+            var tokenSeguridad = new JwtSecurityToken(
+                issuer: null,
+                audience: null,
+                claims: claims,
+                expires: expiration,
+                signingCredentials: creds);
+
+            var token = new JwtSecurityTokenHandler().WriteToken(tokenSeguridad);
+
+            return new RespuestaAutenticacionDto
+            {
+                Token = token,
+                Expiracion = expiration
+            };
+
+        }
     }
-
-
 }
