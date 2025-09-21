@@ -4,6 +4,7 @@ using Concesionaria.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Concesionaria.API.Data;
 using Microsoft.EntityFrameworkCore;
+using Concesionaria.API.Data.Entities;
 
 namespace Concesionaria.API
 {
@@ -22,7 +23,7 @@ namespace Concesionaria.API
             builder.Services.AddDbContext<ApiIdentityDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnectionDB")));
 
-            builder.Services.AddIdentityCore<IdentityUser>(options =>
+            builder.Services.AddIdentityCore<ApplicationUser>(options =>
             {
                 options.User.RequireUniqueEmail = true;
                 options.Password.RequireDigit = true;
@@ -35,8 +36,8 @@ namespace Concesionaria.API
                 .AddEntityFrameworkStores<ApiIdentityDbContext>()
                 .AddDefaultTokenProviders();
 
-            builder.Services.AddScoped<UserManager<IdentityUser>>();
-            //builder.Services.AddScoped<RoleManager<IdentityRole>>();
+            builder.Services.AddScoped<UserManager<ApplicationUser>>();
+            builder.Services.AddScoped<RoleManager<IdentityRole>>();
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

@@ -1,3 +1,4 @@
+using Concesionaria.API.Data.Entities;
 using Concesionaria.API.DTOs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -9,16 +10,16 @@ namespace Concesionaria.API.Controllers
     [ApiController]
     public class UsuariosController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public UsuariosController(UserManager<IdentityUser> userManager)
+        public UsuariosController(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
         }
 
         [HttpGet]
         [EndpointSummary("Obtiene todos los usuarios.")]
-        [ProducesResponseType<IEnumerable<IdentityUser>>(StatusCodes.Status200OK)]
+        [ProducesResponseType<IEnumerable<ApplicationUser>>(StatusCodes.Status200OK)]
         public IActionResult GetUsuarios()
         {
             var users = _userManager.Users.ToList();
@@ -27,7 +28,7 @@ namespace Concesionaria.API.Controllers
 
         [HttpGet("GetUsuario/{id}")]
         [EndpointSummary("Obtiene un usuario por su ID.")]
-        [ProducesResponseType<IdentityUser>(StatusCodes.Status200OK)]
+        [ProducesResponseType<ApplicationUser>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetUsuario([Description("Id del usuario")] string id)
         {
@@ -46,7 +47,7 @@ namespace Concesionaria.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var user = new IdentityUser { UserName = dto.UserName, Email = dto.Email };
+            var user = new ApplicationUser { UserName = dto.UserName, Email = dto.Email };
             var result = await _userManager.CreateAsync(user, dto.Password);
             if (result.Succeeded)
                 return CreatedAtAction(nameof(GetUsuarios), new { id = user.Id }, user);
