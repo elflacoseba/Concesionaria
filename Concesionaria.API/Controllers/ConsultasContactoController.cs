@@ -1,5 +1,6 @@
 ﻿using Concesionaria.Application.DTOs;
 using Concesionaria.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
 
@@ -7,6 +8,7 @@ namespace Concesionaria.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ConsultasContactoController : ControllerBase
     {
         private readonly IConsultaContactoService _consultaContactoService;
@@ -56,7 +58,7 @@ namespace Concesionaria.API.Controllers
         [ProducesResponseType<ConsultaContactoDTO>(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status400BadRequest)]
-
+        [AllowAnonymous]
         public async Task<ActionResult> Post(ConsultaContactoCreacionDTO consultaContactoCreacionDTO)
         {
             if (consultaContactoCreacionDTO == null)

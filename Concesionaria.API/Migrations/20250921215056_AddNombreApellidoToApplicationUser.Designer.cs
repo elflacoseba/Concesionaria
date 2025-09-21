@@ -4,6 +4,7 @@ using Concesionaria.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Concesionaria.API.Migrations
 {
     [DbContext(typeof(ApiIdentityDbContext))]
-    partial class ApiIdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250921215056_AddNombreApellidoToApplicationUser")]
+    partial class AddNombreApellidoToApplicationUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
