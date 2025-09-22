@@ -35,9 +35,16 @@ namespace Concesionaria.Admin.Pages.ConsultaContacto
                 return Page();
             }
 
+            var token = Request.Cookies["AuthToken"];
+
+            if (string.IsNullOrEmpty(token))
+            {
+                return Unauthorized();
+            }
+
             try
             {                
-                var result = await _consultasContactoService.CrearConsultaContactoAsync(ConsultaContacto);
+                var result = await _consultasContactoService.CrearConsultaContactoAsync(ConsultaContacto, token);
 
                 if (result == null)
                 {

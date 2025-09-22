@@ -7,7 +7,12 @@ namespace Concesionaria.Admin.Helpers
         public static async Task<int> ObtenerCantidadNoLeidasAsync(HttpClient httpClient, string apiBaseUrl)
         {
             var response = await httpClient.GetAsync($"{apiBaseUrl}ConsultasContacto/filtrar?noLeida=true");
-            response.EnsureSuccessStatusCode();
+            //response.EnsureSuccessStatusCode();
+            if (!response.IsSuccessStatusCode)
+            {
+                return 0; // O maneja el error según tus necesidades
+            }
+
             var json = await response.Content.ReadAsStringAsync();
             var consultas = JsonSerializer.Deserialize<List<object>>(json);
             return consultas?.Count ?? 0;
