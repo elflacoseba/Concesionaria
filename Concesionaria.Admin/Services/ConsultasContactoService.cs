@@ -13,16 +13,18 @@ namespace Concesionaria.Admin.Services
         {
             _httpClientFactory = httpClientFactory;
             _apiBaseUrl = configuration["ApiBaseUrl"]!;
-            _client = _httpClientFactory.CreateClient("ConsultasContactoApi");
+            _client = _httpClientFactory.CreateClient("ClienteConcesionariaAPI");
         }
 
-        public async Task<IEnumerable<ConsultaContactoDto>?> GetConsultasContactoAsync()
+        public async Task<IEnumerable<ConsultaContactoDto>?> GetConsultasContactoAsync(string token)
         {
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
             return await _client.GetFromJsonAsync<IEnumerable<ConsultaContactoDto>>(_apiBaseUrl + "ConsultasContacto");
         }
 
-        public async Task<ConsultaContactoDto?> GetConsultaContactoByIdAsync(int id)
+        public async Task<ConsultaContactoDto?> GetConsultaContactoByIdAsync(int id, string token)
         {
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
             var result = await _client.GetAsync(_apiBaseUrl + $"ConsultasContacto/{id}");
 
             if (result.IsSuccessStatusCode)
@@ -33,14 +35,15 @@ namespace Concesionaria.Admin.Services
             return null;
         }
 
-        public async Task<ConsultaContactoDto> CrearConsultaContactoAsync(ConsultaContactoCreacionDto consulta)
+        public async Task<ConsultaContactoDto> CrearConsultaContactoAsync(ConsultaContactoCreacionDto consulta, string token)
         {
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
             var response = await _client.PostAsJsonAsync(_apiBaseUrl + "ConsultasContacto", consulta);
 
             if (response.IsSuccessStatusCode)
             {
                 var consultaCreada = await response.Content.ReadFromJsonAsync<ConsultaContactoDto>();
-                
+
                 if (consultaCreada is not null)
                 {
                     return consultaCreada;
@@ -50,17 +53,18 @@ namespace Concesionaria.Admin.Services
             throw new Exception("Error al crear la consulta de contacto");
         }
 
-        public async Task<bool> MarcarConsultaContactoLeidaByIdAsync(int id, bool leida)
+        public async Task<bool> MarcarConsultaContactoLeidaByIdAsync(int id, bool leida, string token)
         {
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
             var response = await _client.PatchAsync(_apiBaseUrl + $"ConsultasContacto/{id}/leida?leida={leida.ToString()}", null);
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> EliminarConsultaContactoByIdAsync(int id)
-        {            
+        public async Task<bool> EliminarConsultaContactoByIdAsync(int id, string token)
+        {
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
             var response = await _client.DeleteAsync(_apiBaseUrl + $"ConsultasContacto/{id}");
             return response.IsSuccessStatusCode;
         }
-
     }
 }

@@ -13,11 +13,13 @@ builder.Services.AddRazorPages()
 builder.Services.AddAntiforgery(options => options.HeaderName = "X-CSRF-TOKEN");
 
 // Registrar HttpClientFactory y el servicio personalizado
-builder.Services.AddHttpClient("ConsultasContactoApi", client =>
+builder.Services.AddHttpClient("ClienteConcesionariaAPI", client =>
 {
     client.BaseAddress = new Uri(configuration["API_URL_BASE"]!);
 });
+
 builder.Services.AddScoped<IConsultasContactoService, ConsultasContactoService>();
+builder.Services.AddScoped<IUsuariosService, UsuariosService>();
 
 var app = builder.Build();
 
@@ -33,6 +35,7 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();

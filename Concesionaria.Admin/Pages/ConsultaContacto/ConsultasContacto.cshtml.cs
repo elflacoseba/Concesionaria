@@ -17,7 +17,15 @@ namespace Concesionaria.Admin.Pages.ConsultaContacto
 
         public async Task OnGetAsync()
         {
-            ConsultasContacto = await _consultasContactoService.GetConsultasContactoAsync();
+            var token = Request.Cookies["AuthToken"];
+            if (string.IsNullOrEmpty(token))
+            {
+                // Redirige al login si no hay token
+                Response.Redirect("/Auth/SignIn");
+                return;
+            }
+
+            ConsultasContacto = await _consultasContactoService.GetConsultasContactoAsync(token);
             ViewData["Breadcrumbs"] = new List<dynamic>
             {
                 new { Nombre = "Inicio", Url = "/" },
@@ -27,7 +35,14 @@ namespace Concesionaria.Admin.Pages.ConsultaContacto
 
         public async Task<IActionResult> OnPostMarcarLeidaAsync(int id, bool leida)
         {
-            var result = await _consultasContactoService.MarcarConsultaContactoLeidaByIdAsync(id, leida);
+            var token = Request.Cookies["AuthToken"];
+
+            if (string.IsNullOrEmpty(token))
+            {
+                return Unauthorized();
+            }
+
+            var result = await _consultasContactoService.MarcarConsultaContactoLeidaByIdAsync(id, leida, token);
             if (result == true)
                 return new JsonResult(new { success = true });
             return BadRequest();
@@ -35,7 +50,14 @@ namespace Concesionaria.Admin.Pages.ConsultaContacto
    
         public async Task<IActionResult> OnPostEliminarConsultaAsync(int id)
         {
-            var result = await _consultasContactoService.EliminarConsultaContactoByIdAsync(id);
+            var token = Request.Cookies["AuthToken"];
+            
+            if (string.IsNullOrEmpty(token))
+            {
+                return Unauthorized();
+            }
+
+            var result = await _consultasContactoService.EliminarConsultaContactoByIdAsync(id, token);
             if (result == true)
                 return new JsonResult(new { success = true });
             return BadRequest();

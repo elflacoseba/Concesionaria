@@ -21,6 +21,7 @@ namespace Concesionaria.API.Controllers
         [HttpGet]
         [EndpointSummary("Obtiene todas las consultas de contacto.")]
         [ProducesResponseType<IEnumerable<ConsultaContactoSinMensajeDTO>>(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IEnumerable<ConsultaContactoSinMensajeDTO>> Get()
         {
             return await _consultaContactoService.GetAllConsultasContactoAsync();
@@ -29,6 +30,7 @@ namespace Concesionaria.API.Controllers
         [HttpGet("GetPaged")]
         [EndpointSummary("Obtiene las consultas de contacto paginadas.")]
         [ProducesResponseType(typeof(PagedResultDTO<ConsultaContactoDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<PagedResultDTO<ConsultaContactoDTO>>> GetPaged([FromQuery][Description("Indica el número de página.")] int pageNumber = 1, [FromQuery][Description("Indica la cantidad de registros por página")] int pageSize = 10)
         {
             var result = await _consultaContactoService.GetConsultasContactoPagedAsync(pageNumber, pageSize);
@@ -39,7 +41,8 @@ namespace Concesionaria.API.Controllers
         [EndpointSummary("Obtiene una consulta de contacto por su Id.")]
         [EndpointDescription("Proporciona los detalles de una consulta de contacto específica, identificada por su Id. Si no se encuentra la consulta, devuelve un estado 404 Not Found.")]
         [ProducesResponseType<ConsultaContactoDTO>(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]        
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<ConsultaContactoDTO>> Get([Description("El Id de la consulta de contacto.")] int id)
         {
             var consultaContacto = await _consultaContactoService.GetConsultaContactoByIdAsync(id);
@@ -75,6 +78,7 @@ namespace Concesionaria.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult> Put([Description("El Id de la consulta de contacto.")] int id, ConsultaContactoActualizacionDTO consultaContactoActualizacionDTO)
         {
             var consultaContacto = await _consultaContactoService.GetConsultaContactoByIdAsync(id);
@@ -92,6 +96,7 @@ namespace Concesionaria.API.Controllers
         [EndpointSummary("Marca una consulta de contacto como leída o no leída.")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult> MarcarComoLeida([FromRoute][Description("El Id de la consulta de contacto.")] int id, [FromQuery][Description("Indica si la consulta de contacto se marcará como leída o no leída.")] bool leida)
         {
             var consultaContacto = await _consultaContactoService.GetConsultaContactoByIdAsync(id);
@@ -110,6 +115,7 @@ namespace Concesionaria.API.Controllers
         [EndpointSummary("Elimina una consulta de contacto por su Id.")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult> Delete([Description("El Id de la consulta de contacto.")] int id)
         {
             var consultaContacto = await _consultaContactoService.GetConsultaContactoByIdAsync(id);
@@ -127,6 +133,7 @@ namespace Concesionaria.API.Controllers
         [HttpGet("filtrar")]
         [EndpointSummary("Filtra las consultas de contacto por estado de lectura.")]
         [ProducesResponseType<IEnumerable<ConsultaContactoSinMensajeDTO>>(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<IEnumerable<ConsultaContactoSinMensajeDTO>>> FiltrarPorNoLeida([FromQuery][Description("Indica que la consulta de contacto se filtrará por el estado de no leída.")] bool noLeida)
         {
             var consultas = await _consultaContactoService.GetConsultasPorEstadoNoLeidaAsync(noLeida);
