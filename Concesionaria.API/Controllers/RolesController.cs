@@ -20,6 +20,7 @@ namespace Concesionaria.API.Controllers
         [HttpGet]
         [EndpointSummary("Obtiene todos los roles disponibles.")]
         [ProducesResponseType(typeof(IEnumerable<IdentityRole>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult GetRoles()
         {
             var roles = _roleManager.Roles.ToList();
@@ -30,6 +31,7 @@ namespace Concesionaria.API.Controllers
         [EndpointSummary("Crea un nuevo rol.")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> CreateRole([FromBody][Description("Nombre del rol")] string roleName)
         {
             if (string.IsNullOrWhiteSpace(roleName))
@@ -46,6 +48,7 @@ namespace Concesionaria.API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> DeleteRole([Description("Nombre del rol")] string roleName)
         {
             var role = await _roleManager.FindByNameAsync(roleName);

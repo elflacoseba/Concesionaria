@@ -28,6 +28,7 @@ namespace Concesionaria.API.Controllers
         [HttpGet]
         [EndpointSummary("Obtiene todos los usuarios.")]
         [ProducesResponseType<IEnumerable<ApplicationUser>>(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult GetUsuarios()
         {
             var users = _userManager.Users.ToList();
@@ -38,6 +39,7 @@ namespace Concesionaria.API.Controllers
         [EndpointSummary("Obtiene un usuario por su ID.")]
         [ProducesResponseType<ApplicationUser>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> GetUsuario([Description("Id del usuario")] string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -50,6 +52,7 @@ namespace Concesionaria.API.Controllers
         [EndpointSummary("Crea un nuevo usuario.")]
         [ProducesResponseType<IdentityUser>(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> CrearUsuario([FromBody] UsuarioCrearDto dto)
         {
             if (!ModelState.IsValid)
@@ -67,6 +70,7 @@ namespace Concesionaria.API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> EliminarUsuario([Description("Id del usuario")] string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -83,6 +87,7 @@ namespace Concesionaria.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> AsignarRoles([Description("Id del usuario")] string id, [FromBody] List<string> roles)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -99,6 +104,7 @@ namespace Concesionaria.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> RemoverRoles([Description("Id del usuario")] string id, [FromBody] List<string> roles)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -114,6 +120,7 @@ namespace Concesionaria.API.Controllers
         [EndpointSummary("Obtiene los roles de un usuario.")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> ObtenerRoles([Description("Id del usuario")] string id)
         {
             var user = await _userManager.FindByIdAsync(id);
