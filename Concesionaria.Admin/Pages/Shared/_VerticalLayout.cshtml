@@ -5,7 +5,9 @@
 @{
     var httpClient = HttpClientFactory.CreateClient();
     var apiBaseUrl = Configuration["API_URL_BASE"];
-    var consultasNoLeidas = await ConsultaContactoHelper.ObtenerCantidadNoLeidasAsync(httpClient, apiBaseUrl!);
+    var httpContext = Context;
+
+    var consultasNoLeidas = await ConsultaContactoHelper.ObtenerCantidadNoLeidasAsync(httpClient, apiBaseUrl!, httpContext);
 }
 
 <!DOCTYPE html>
