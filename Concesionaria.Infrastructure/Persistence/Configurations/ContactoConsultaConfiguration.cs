@@ -55,6 +55,16 @@ namespace Concesionaria.Infrastructure.Persistence.Configurations
             builder.Property(v => v.FechaLectura)                
                 .HasColumnType("datetime2")                
                 .HasColumnOrder(8);
+            
+            builder.Property(v => v.VehiculoInteres)
+                .HasMaxLength(100)
+                .HasColumnOrder(9)
+                .IsRequired(false);
+
+            builder.Property(v => v.VehiculoPermuta)
+                .HasMaxLength(100)
+                .HasColumnOrder(10)
+                .IsRequired(false);
         }
     }
 }

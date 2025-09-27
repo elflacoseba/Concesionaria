@@ -11,5 +11,14 @@ namespace Concesionaria.Admin.DTOs
         public DateTime FechaEnvio { get; set; } = DateTime.UtcNow;
         public bool NoLeida { get; set; }
         public DateTime? FechaLectura { get; set; } = null;
+        /// <summary>
+        /// Vehículo de interés del cliente.
+        /// </summary>
+        public string VehiculoInteres { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Vehículo ofrecido por el cliente en permuta.
+        /// </summary>
+        public string VehiculoPermuta { get; set; } = string.Empty;
     }
 }

@@ -24,5 +24,17 @@ namespace Concesionaria.Admin.DTOs
         [Required(ErrorMessage = "El mensaje es requerido")]
         [StringLength(2000, ErrorMessage = "Máximo 2000 caracteres")]
         public string? Mensaje { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Vehículo de interés del cliente.
+        /// </summary>
+        [StringLength(100, ErrorMessage = "Máximo 100 caracteres")]
+        public string? VehiculoInteres { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Vehículo ofrecido por el cliente en permuta.
+        /// </summary>
+        [StringLength(100, ErrorMessage = "Máximo 100 caracteres")]
+        public string? VehiculoPermuta { get; set; } = string.Empty;
     }
 }

@@ -70,6 +70,20 @@
                         </div>
                     </div>
 
+                        @if (Model.ConsultaContacto.VehiculoInteres != null || Model.ConsultaContacto.VehiculoPermuta != null)
+                        {
+                            <div class="mt-lg-4 mt-3">
+                                @if (!string.IsNullOrWhiteSpace(Model.ConsultaContacto.VehiculoInteres))
+                                {
+                                    <p>Vehículo de interés: @Model.ConsultaContacto.VehiculoInteres</p>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(Model.ConsultaContacto.VehiculoPermuta))
+                                {
+                                    <p>Vehículo en permuta: @Model.ConsultaContacto.VehiculoPermuta</p>
+                                }
+                            </div>
+                        }                                               
+
                         <div class="mt-lg-4 mt-3">
                         <p>@Model.ConsultaContacto.Mensaje</p>
                         </div>
