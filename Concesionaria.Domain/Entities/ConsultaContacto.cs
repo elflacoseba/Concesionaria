@@ -50,11 +50,11 @@ namespace Concesionaria.Domain.Entities
         /// <summary>
         /// Vehículo de interés del cliente.
         /// </summary>
-        public string VehiculoInteres { get; set; } = string.Empty;
+        public string? VehiculoInteres { get; set; } = string.Empty;
 
         /// <summary>
         /// Vehículo ofrecido por el cliente en permuta.
         /// </summary>
-        public string VehiculoPermuta { get; set; } = string.Empty;
+        public string? VehiculoPermuta { get; set; } = string.Empty;
     }
 }

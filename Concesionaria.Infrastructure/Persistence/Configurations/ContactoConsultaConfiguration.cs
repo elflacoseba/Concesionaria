@@ -58,11 +58,13 @@ namespace Concesionaria.Infrastructure.Persistence.Configurations
             
             builder.Property(v => v.VehiculoInteres)
                 .HasMaxLength(100)
-                .HasColumnOrder(9);
+                .HasColumnOrder(9)
+                .IsRequired(false);
 
             builder.Property(v => v.VehiculoPermuta)
                 .HasMaxLength(100)
-                .HasColumnOrder(10);
+                .HasColumnOrder(10)
+                .IsRequired(false);
         }
     }
 }

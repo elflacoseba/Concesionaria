@@ -57,6 +57,14 @@
                                 <label for="txtMensaje" class="form-label">Mensaje</label>
                                 <textarea class="form-control @(ViewData.ModelState["ConsultaContacto.Mensaje"]?.Errors.Count > 0 ? "is-invalid" : (ViewData.ModelState["ConsultaContacto.Mensaje"] != null ? "is-valid" : ""))" id="txtMensaje" asp-for="ConsultaContacto.Mensaje" rows="3"></textarea>
                                 <span asp-validation-for="ConsultaContacto.Mensaje" class="@(ViewData.ModelState["ConsultaContacto.Mensaje"]?.Errors.Count > 0 ? "invalid-feedback" : (ViewData.ModelState["ConsultaContacto.Mensaje"] != null ? "valid-feedback" : ""))"></span>
+                            </div>                            
+                            <div class="mb-3">
+                                <label for="txtVehiculoInteres" class="form-label">Vehículo de Interés</label>
+                                <input type="text" class="form-control" id="txtVehiculoInteres" asp-for="ConsultaContacto.VehiculoInteres" placeholder="Vehículo de interés" maxlength="100">
+                            </div>                            
+                            <div class="mb-3">
+                                <label for="txtVehiculoPermuta" class="form-label">Vehículo Permuta</label>
+                                <input type="text" class="form-control" id="txtVehiculoPermuta" asp-for="ConsultaContacto.VehiculoPermuta" placeholder="Vehículo ofrecido en permuta" maxlength="100">
                             </div>
                             <button type="submit" class="btn btn-primary">Enviar Consulta</button>
                         </form>
