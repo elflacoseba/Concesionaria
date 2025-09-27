@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Concesionaria.API.Data.Entities;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Concesionaria.API.Services;
 
 namespace Concesionaria.API
 {
@@ -37,6 +39,8 @@ namespace Concesionaria.API
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApiIdentityDbContext>()
                 .AddDefaultTokenProviders();
+
+            builder.Services.AddTransient<IEmailSender, EmailSender>();
 
             builder.Services.AddScoped<UserManager<ApplicationUser>>();
             builder.Services.AddScoped<RoleManager<IdentityRole>>();

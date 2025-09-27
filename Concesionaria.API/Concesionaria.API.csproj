@@ -27,4 +27,8 @@
     <ProjectReference Include="..\Concesionaria.Infrastructure\Concesionaria.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
+
 </Project>
