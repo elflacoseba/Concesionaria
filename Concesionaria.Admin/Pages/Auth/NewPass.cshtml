@@ -1,0 +1,120 @@
+@page "/auth-new-pass"
+@model Concesionaria.Admin.Pages.Auth.NewPassModel
+
+@{
+    ViewBag.Title = "Nueva contraseña";
+    Layout = "~/Pages/Shared/_BaseLayout.cshtml";
+}
+
+
+@section styles
+{
+}
+
+<div class="auth-box overflow-hidden align-items-center d-flex">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xxl-4 col-md-6 col-sm-8">
+
+                <div class="auth-brand text-center mb-4">
+                    <a href="/" class="logo-dark">
+                        <img src="~/images/logo-black.png" alt="dark logo" height="32">
+                    </a>
+                    <a href="/" class="logo-light">
+                        <img src="~/images/logo.png" alt="logo" height="32">
+                    </a>
+                    <h4 class="fw-bold mt-3">Cree una nueva contraseña! | IN+</h4>
+                    <p class="text-muted w-lg-75 mx-auto">Ingrese una nueva contraseña.</p>
+                </div>
+
+                <div class="card p-4 rounded-4">
+
+                    @if (@Model.ShowInvalidTokenAlert)
+                    {
+                        <div class="alert alert-danger fade show" role="alert">
+                            <i class="ti ti-alert-triangle fs-xl"></i>
+                            Token inválido!
+                        </div>
+                    }
+                    else
+                    {
+
+                        @if (Model.MessageResult != null && Model.AlertDanger == false)
+                        {
+                            <div class="alert alert-success fade show mt-3" role="alert">
+                                <i class="ti ti-check fs-xl"></i>
+                                <span>@Model.MessageResult</span>
+                            </div>
+                        }
+                        else
+                        {
+                            <form method="post">
+                                <input type="hidden" asp-for="ResetPasswordModel.Token" />
+                                <input type="hidden" asp-for="ResetPasswordModel.Email" />
+
+                                <div class="mb-3" data-password="bar">
+                                    <label for="NewPassword" class="form-label">Nueva contraseña <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input asp-for="ResetPasswordModel.NewPassword" type="password" class="form-control" id="NewPassword" required>
+                                    </div>
+
+                                    <div class="password-bar my-2"></div>
+                                    <p class="text-muted fs-xs mb-0">Use más de 8 caracteres con letras, números y símbolos.</p>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="ConfirmPassword" class="form-label">Confirme nueva contraseña <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input asp-for="ConfirmPassword" type="password" class="form-control" id="ConfirmPassword" required>
+                                    </div>
+                                </div>
+
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary fw-semibold py-2">Actualizar contraseña</button>
+                                </div>
+
+                            </form>
+                        }
+                    }
+
+                    @if (Model.MessageResult != null)
+                    {
+                        @if (Model.AlertDanger)
+                        {
+                            <div class="alert alert-danger fade show mt-3" role="alert">
+                                <i class="ti ti-info-triangle fs-xl"></i>
+                                <span>@Model.MessageResult</span>
+                            </div>
+                        }
+
+                    }
+
+                    <p class="text-muted text-center mb-0">
+                        Regrese a <a href="auth-sign-in" class="text-decoration-underline link-offset-3 fw-semibold">Iniciar sesión</a>
+                    </p>
+                </div>
+
+                <p class="text-center text-muted mt-4 mb-0">
+                    @if (DateTime.Now.Year == 2025)
+                    {
+                        <span>© 2025</span>
+                    }
+                    else
+                    {
+                        <span>© 2025 - @DateTime.Now.Year</span>
+                    }
+
+                    - Desarrollada por <a href="https://elflacoseba.dev" target="_blank"
+                                          class="fw-semibold">Sebastián Serrisuela</a>
+                </p>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+}
+

@@ -1,5 +1,6 @@
 ﻿using Concesionaria.Admin.DTOs;
 using Concesionaria.Admin.Services.Interfaces;
+using oncesionaria.Admin.DTOs;
 
 namespace Concesionaria.Admin.Services
 {
@@ -31,6 +32,13 @@ namespace Concesionaria.Admin.Services
         public async Task<int> GenerarResetPasswordToken(string email)
         {
             var response = await _client.PostAsJsonAsync(_apiBaseUrl + "Usuarios/GenerarResetPasswordToken", email);
+
+            return (int)response.StatusCode;
+        }
+
+        public async Task<int> ResetearPassword(ResetPasswordDto resetPasswordDto)
+        {
+            var response = await _client.PostAsJsonAsync(_apiBaseUrl + "Usuarios/ResetearPassword", resetPasswordDto);
 
             return (int)response.StatusCode;
         }
