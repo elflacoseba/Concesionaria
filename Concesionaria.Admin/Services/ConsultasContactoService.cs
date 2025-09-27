@@ -12,7 +12,7 @@ namespace Concesionaria.Admin.Services
         public ConsultasContactoService(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
-            _apiBaseUrl = configuration["ApiBaseUrl"]!;
+            _apiBaseUrl = configuration["API_URL_BASE"]!;
             _client = _httpClientFactory.CreateClient("ClienteConcesionariaAPI");
         }
 

@@ -12,7 +12,7 @@ namespace Concesionaria.Admin.Services
         public UsuariosService(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
-            _apiBaseUrl = configuration["ApiBaseUrl"]!;
+            _apiBaseUrl = configuration["API_URL_BASE"]!;
             _client = _httpClientFactory.CreateClient("ClienteConcesionariaAPI");
         }
 
@@ -26,6 +26,13 @@ namespace Concesionaria.Admin.Services
             var resultado = await response.Content.ReadFromJsonAsync<RespuestaAutenticacionDto>();
             return resultado!;
 
+        }
+
+        public async Task<int> GenerarResetPasswordToken(string email)
+        {
+            var response = await _client.PostAsJsonAsync(_apiBaseUrl + "Usuarios/GenerarResetPasswordToken", email);
+
+            return (int)response.StatusCode;
         }
     }
 }
