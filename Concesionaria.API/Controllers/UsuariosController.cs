@@ -168,12 +168,33 @@ namespace Concesionaria.API.Controllers
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
             // Aquí puedes construir el link para el frontend Razor Pages, por ejemplo:
-            var resetLink = $"{_configuration["FrontendUrl"]}/Auth/ResetPass?email={Uri.EscapeDataString(email)}&token={Uri.EscapeDataString(token)}";
+            var resetLink = $"{_configuration["FrontendUrl"]}/auth-new-pass?email={Uri.EscapeDataString(email)}&token={Uri.EscapeDataString(token)}";
             
             await _emailSender.SendEmailAsync(email, "Restablecer contraseña", $"Haz clic aquí para restablecer tu contraseña: {resetLink}");
 
             return Ok(new { resetLink, token });
         }
+
+        [HttpPost("ResetearPassword")]
+        [AllowAnonymous]
+        [EndpointSummary("Resetea la contraseña de un usuario usando el token de reseteo.")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> ResetearPassword([FromBody] ResetPasswordDto resetPasswordDto)
+        {
+            var user = await _userManager.FindByEmailAsync(resetPasswordDto.Email);
+            if (user == null)
+                return NotFound("Usuario no encontrado.");
+
+            var result = await _userManager.ResetPasswordAsync(user, resetPasswordDto.Token, resetPasswordDto.NewPassword);
+            
+            if (result.Succeeded)
+                return Ok("Contraseña restablecida correctamente.");
+            return BadRequest(result.Errors);
+        }
+
+        
 
         /// <summary>
         /// Construye un token JWT para el usuario especificado en las credenciales.
