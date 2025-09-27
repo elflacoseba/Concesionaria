@@ -21,7 +21,7 @@ namespace Concesionaria.Application.Services
 
         public async Task<IEnumerable<ConsultaContactoSinMensajeDTO>> GetAllConsultasContactoAsync()
         {
-            var consultas = await _repository.GetSelectedAsync(c => new { c.Id, c.Nombre, c.Apellido, c.Email, c.Telefono, c.FechaEnvio, c.FechaLectura, c.NoLeida });
+            var consultas = await _repository.GetSelectedAsync(c => new { c.Id, c.Nombre, c.Apellido, c.Email, c.Telefono, c.FechaEnvio, c.FechaLectura, c.NoLeida, c.VehiculoInteres, c.VehiculoPermuta });
             return consultas.Adapt<IEnumerable<ConsultaContactoSinMensajeDTO>>();
         }
 

@@ -27,7 +27,11 @@ namespace Concesionaria.Application.Validators
             RuleFor(x => x.Mensaje)
                 .NotNull().WithMessage("El mensaje es requerido.")
                 .NotEmpty().WithMessage("El mensaje es obligatorio.")
-                .MaximumLength(2000).WithMessage("El mensaje no puede exceder los 2000 caracteres.");            
+                .MaximumLength(2000).WithMessage("El mensaje no puede exceder los 2000 caracteres.");
+            RuleFor(x => x.VehiculoInteres)
+                .MaximumLength(100).WithMessage("El vehículo de interés no puede exceder los 100 caracteres.");
+            RuleFor(x => x.VehiculoPermuta)
+                .MaximumLength(100).WithMessage("El vehículo en permuta no puede exceder los 100 caracteres.");
         }
     }
 }
