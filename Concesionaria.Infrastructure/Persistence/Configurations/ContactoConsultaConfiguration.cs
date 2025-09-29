@@ -46,6 +46,11 @@ namespace Concesionaria.Infrastructure.Persistence.Configurations
                 .HasDefaultValueSql("GETUTCDATE()")
                 .HasColumnOrder(6);
 
+            // Índice descendente en FechaEnvio, permite duplicados
+            builder.HasIndex(v => v.FechaEnvio)
+                .IsDescending(true)
+                .HasDatabaseName("IX_ConsultasContacto_FechaEnvio_Desc");
+
             builder.Property(v => v.NoLeida)
                 .IsRequired()
                 .HasColumnType("bit")
