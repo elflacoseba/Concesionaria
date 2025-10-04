@@ -64,7 +64,13 @@ namespace Concesionaria.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var user = new ApplicationUser { UserName = dto.UserName, Email = dto.Email };
+            var user = new ApplicationUser { 
+                UserName = dto.UserName,
+                Email = dto.Email,
+                Nombre = dto.Nombre,
+                Apellido = dto.Apellido
+            };
+
             var result = await _userManager.CreateAsync(user, dto.Password);
             if (result.Succeeded)
                 return CreatedAtAction(nameof(GetUsuarios), new { id = user.Id }, user);
