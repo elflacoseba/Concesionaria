@@ -210,12 +210,15 @@ namespace Concesionaria.API.Controllers
         /// <returns>Un objeto <see cref="RespuestaAutenticacionDto"/> con el token generado y su fecha de expiración.</returns>
         private async Task<RespuestaAutenticacionDto> ConstruirToken(CredencialesUsuarioDto credenciales)
         {
+            var user = await _userManager.FindByEmailAsync(credenciales.Email);
+            
             var claims = new List<Claim>
             {
-                new Claim("email", credenciales.Email)
+                new Claim("UsuarioEmail", credenciales.Email),
+                new Claim("UsuarioNombre", user!.Nombre),
+                new Claim("UsuarioApellido", user!.Apellido)
             };
 
-            var user = await _userManager.FindByEmailAsync(credenciales.Email);
             var claimsDB = await _userManager.GetClaimsAsync(user!);
 
             claims.AddRange(claimsDB);

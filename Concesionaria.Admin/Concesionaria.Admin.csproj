@@ -7,4 +7,8 @@
     <UserSecretsId>974eec23-f810-4fa3-a264-6f0a07b18ad5</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
+  </ItemGroup>
+
 </Project>
