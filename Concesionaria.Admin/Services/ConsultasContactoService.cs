@@ -35,9 +35,8 @@ namespace Concesionaria.Admin.Services
             return null;
         }
 
-        public async Task<ConsultaContactoDto> CrearConsultaContactoAsync(ConsultaContactoCreacionDto consulta, string token)
+        public async Task<ConsultaContactoDto> CrearConsultaContactoAsync(ConsultaContactoCreacionDto consulta)
         {
-            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
             var response = await _client.PostAsJsonAsync(_apiBaseUrl + "ConsultasContacto", consulta);
 
             if (response.IsSuccessStatusCode)
