@@ -214,11 +214,11 @@ class App {
                         // Function to format numbers with commas and decimal places if necessary
                         function formatNumber(num) {
                             if (num % 1 === 0) {
-                                // Format as integer with commas
-                                return num.toLocaleString();
+                                // Format as integer with commas (Argentina format)
+                                return num.toLocaleString('es-AR');
                             } else {
-                                // Format as float with two decimal places and commas
-                                return num.toLocaleString(undefined, {
+                                // Format as float with two decimal places and commas (Argentina format)
+                                return num.toLocaleString('es-AR', {
                                     minimumFractionDigits: 2,
                                     maximumFractionDigits: 2,
                                 });
@@ -745,7 +745,21 @@ class Plugins {
         document.querySelectorAll("[data-provider]").forEach((item) => {
             const type = item.getAttribute("data-provider");
             const attrs = item.attributes;
-            const dateConfig = { disableMobile: true, defaultDate: new Date() };
+            const dateConfig = { 
+                disableMobile: true, 
+                defaultDate: new Date(),
+                locale: {
+                    firstDayOfWeek: 1, // Lunes como primer día
+                    weekdays: {
+                        shorthand: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+                        longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
+                    },
+                    months: {
+                        shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                        longhand: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
+                    }
+                }
+            };
 
             if (type === "flatpickr") {
                 if (attrs["data-date-format"])
