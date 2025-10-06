@@ -1,5 +1,7 @@
 using Concesionaria.Admin.Services.Interfaces;
 using Concesionaria.Admin.Services;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -21,6 +23,11 @@ builder.Services.AddHttpClient("ClienteConcesionariaAPI", client =>
 builder.Services.AddScoped<IConsultasContactoService, ConsultasContactoService>();
 builder.Services.AddScoped<IUsuariosService, UsuariosService>();
 
+// Configuración regional para Argentina
+var cultureInfo = new CultureInfo("es-AR");
+CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,6 +39,15 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Configuración de localización
+var supportedCultures = new[] { cultureInfo };
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture(cultureInfo),
+    SupportedCultures = supportedCultures,
+    SupportedUICultures = supportedCultures
+});
 
 app.UseRouting();
 
