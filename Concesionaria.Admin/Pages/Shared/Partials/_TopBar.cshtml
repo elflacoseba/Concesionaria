@@ -7,7 +7,7 @@
             <!-- Topbar Brand Logo -->
             <div class="logo-topbar">
                 <!-- Logo light -->
-                <a href="/" class="logo-light">
+                <a asp-page="Index" class="logo-light">
                     <span class="logo-lg">
                         <img src="~/images/logo.png" alt="logo">
                     </span>
@@ -17,7 +17,7 @@
                 </a>
 
                 <!-- Logo Dark -->
-                <a href="/" class="logo-dark">
+                <a asp-page="Index" class="logo-dark">
                     <span class="logo-lg">
                         <img src="~/images/logo-black.png" alt="dark logo">
                     </span>
@@ -71,7 +71,7 @@
                         <div class="dropdown-divider"></div>
 
                         <!-- Logout -->
-                        <a href="/Auth/Logout" class="dropdown-item text-danger fw-semibold">
+                        <a asp-page="/Auth/Logout" class="dropdown-item text-danger fw-semibold">
                             <i class="ti ti-logout-2 me-2 fs-17 align-middle"></i>
                             <span class="align-middle">Cerrar Sesión</span>
                         </a>
