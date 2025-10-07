@@ -4,7 +4,7 @@
 <div class="sidenav-menu">
 
     <!-- Brand Logo -->
-    <a href="/" class="logo">
+    <a asp-page="Index" class="logo">
         <span class="logo logo-light">
             <span class="logo-lg"><img src="~/images/logo.png" alt="logo"></span>
             <span class="logo-sm"><img src="~/images/logo-sm.png" alt="small logo"></span>
@@ -57,7 +57,7 @@
                         <div class="dropdown-divider"></div>
 
                         <!-- Logout -->
-                        <a href="/Auth/Logout" class="dropdown-item text-danger fw-semibold">
+                        <a asp-page="/Auth/Logout" class="dropdown-item text-danger fw-semibold">
                             <i class="ti ti-logout-2 me-2 fs-17 align-middle"></i>
                             <span class="align-middle">Cerrar Sesión</span>
                         </a>
@@ -71,14 +71,14 @@
             <li class="side-nav-title">Menu</li>
 
             <li class="side-nav-item">
-                <a href="/" class="side-nav-link">
+                <a asp-page="Index" class="side-nav-link">
                     <span class="menu-icon"><i class="ti ti-layout-dashboard"></i></span>
                     <span class="menu-text">Inicio</span>                    
                 </a>
             </li>
 
             <li class="side-nav-item">
-                <a href="consultas-contacto" target="_self" class="side-nav-link">
+                <a asp-page="/ConsultaContacto/ConsultasContacto" target="_self" class="side-nav-link">
                     <span class="menu-icon"><i class="ti ti-message-2"></i></span>
                     <span class="menu-text">Consultas</span>
                     @if (Model.ConsultasNoLeidas > 0)
