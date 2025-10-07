@@ -26,8 +26,8 @@ namespace Concesionaria.Admin.Pages.ConsultaContacto
 
             ViewData["Breadcrumbs"] = new List<dynamic>
             {
-                new { Nombre = "Inicio", Url = "Index" },
-                new { Nombre = "Consultas de Contacto", Url = "/ConsultaContacto/ConsultasContacto" },
+                new { Nombre = "Inicio", Url = "/" },
+                new { Nombre = "Consultas de Contacto", Url = "/consultas-contacto" },
                 new { Nombre = "Detalle", Url = "" }
             };
 

@@ -28,7 +28,7 @@ namespace Concesionaria.Admin.Pages.ConsultaContacto
             ConsultasContacto = await _consultasContactoService.GetConsultasContactoAsync(token);
             ViewData["Breadcrumbs"] = new List<dynamic>
             {
-                new { Nombre = "Inicio", Url = "Index" },
+                new { Nombre = "Inicio", Url = "/" },
                 new { Nombre = "Consultas de Contacto", Url = "" }
             };
         }

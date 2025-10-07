@@ -17,7 +17,7 @@
                 {
                     if (!string.IsNullOrEmpty((string)crumb.Url))
                     {
-                        <li class="breadcrumb-item"><a asp-page="@crumb.Url">@crumb.Nombre</a></li>
+                        <li class="breadcrumb-item"><a href="@crumb.Url">@crumb.Nombre</a></li>
                     }
                     else
                     {
